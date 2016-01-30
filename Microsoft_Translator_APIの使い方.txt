@@ -1,0 +1,28 @@
+翻訳サービスのMicrosoft Translator APIの使い方（暫定版）
+
+①「Microsoftアカウント」を持っていない場合は取得します。
+
+② Windows Azure Marketplaceへの登録
+   Windows Azure Marketplaceへの登録が必要となる。 
+   以下のURLより「Microsoft アカウント」でサインインをする。 
+     Windows Azure Marketplace
+     https://datamarket.azure.com/home
+
+③「Microsoft Translator」の利用登録します。
+  右上の検索に「Microsoft Translator」と入れて検索します。
+
+④ Microsoft Translator APIは従量課金だが、2,000,000文字/月までは無料です。
+  月額 \0 のところのサインアップを押して、サブスクリプトします。
+
+⑤アプリケーション登録
+   Microsoft Translator APIを使用するにはアプリケーションを登録し、クライアントIDと顧客の秘密を取得する必要がある。
+   マイアカウント→開発者→下の登録ボタンを押す
+
+   クライアントID：任意のテキストを入力する
+   名前：なんでもOK
+   顧客の秘密：自動設定
+   リダイレクトURI：http://localhost/ など適当な値でOK
+
+   入力後「作成」ボタンで作成する
+
+上記の、「クライアントID」と「顧客の秘密」を本プログラムの翻訳設定で入力します。
