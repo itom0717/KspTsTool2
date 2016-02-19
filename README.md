@@ -1,4 +1,4 @@
-Kerbal Space Program Translation Support Tool
+(作成中)Kerbal Space Program Translation Support Tool 2
 ====
 
 このプログラムは Kerbal Space Program のPart(MODにも対応)および ScienceDefs.cfg(MODも対応)の説明文を抽出し、Microsoft Translator APIを使用して自動で機械翻訳します。  
