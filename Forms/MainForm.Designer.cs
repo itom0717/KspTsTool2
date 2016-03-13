@@ -251,7 +251,7 @@
             // 
             // ImportFileButton
             // 
-            this.ImportFileButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.ImportFileButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.ImportFileButton.Location = new System.Drawing.Point(21, 307);
             this.ImportFileButton.Name = "ImportFileButton";
             this.ImportFileButton.Size = new System.Drawing.Size(111, 23);

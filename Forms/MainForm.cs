@@ -456,6 +456,8 @@ namespace KspTsTool2.Forms
             this.CancelTranslationButton.Visible = !isEnable;
 
             this.SettingButton.Enabled = isEnable;
+
+            this.IsAfterOpenFolderCheckBox.Enabled = isEnable;
         }
 
 
