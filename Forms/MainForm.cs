@@ -834,7 +834,7 @@ namespace KspTsTool2.Forms
                         if ( !configurationFile.AnalysisCfgFile( cfgFile ) )
                         {
                             //データなしのため、次のファイルへ
-                            progressStatus.DispStatus( msgCfgFile + " --- 翻訳テキスト無し" );
+                            progressStatus.DispStatus( msgCfgFile + " --- 翻訳するテキスト無し" );
                             continue;
                         }
 
