@@ -1,4 +1,4 @@
-(WIP)Kerbal Space Program Translation Support Tool 2
+Kerbal Space Program Translation Support Tool 2
 ====
 
 このプログラムは Kerbal Space Program のパーツおよびサイエンスレポートの説明文を抽出し、Microsoft Translator APIを使用して自動で機械翻訳します。  
