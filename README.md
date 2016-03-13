@@ -1,11 +1,11 @@
-(作成中)Kerbal Space Program Translation Support Tool 2
+(WIP)Kerbal Space Program Translation Support Tool 2
 ====
 
-このプログラムは Kerbal Space Program のPart(MODにも対応)および ScienceDefs.cfg(MODも対応)の説明文を抽出し、Microsoft Translator APIを使用して自動で機械翻訳します。  
+このプログラムは Kerbal Space Program のパーツおよびサイエンスレポートの説明文を抽出し、Microsoft Translator APIを使用して自動で機械翻訳します。  
 ModuleManager.dll で使用するcfgファイルを作成します。  
 
-###※Kerbal Space Program本体のファイルは変更しません。ModuleManager.dll用のConfigファイルを作成するだけです。
-
+###※Kerbal Space Program本体のファイルは一切変更しません。ModuleManager.dll用のConfigファイルを作成するだけです。  
+###※ModuleManager.dllは別途入手してください。  
 
 ## 開発環境
  Microsoft Visual Studio Community 2015
@@ -22,26 +22,26 @@ ModuleManager.dll で使用するcfgファイルを作成します。
 
 
 ###実行方法  
-① GameDataフォルダは Kerbal Space Programをインストールした先にある、GameDataフォルダを指定します。  
+① 処理対象フォルダ(GameDataフォルダ)は Kerbal Space Programをインストールした先にある、GameDataフォルダを指定します。  
   
-② 翻訳データ保存先は、任意のフォルダを指定します。  
+② 翻訳済みデータ保存フォルダ名は、①のGameData内に作成するファイル名を指定します。  
   
-③「翻訳」設定で、Microsoft Translator APIの「クライアントID」と「顧客の秘密」を入力します。  
+③「翻訳設定」で、自動翻訳の有効/無効を設定します。  
+   自動翻訳を行なう場合は、Microsoft Translator APIの「クライアントID」と「顧客の秘密」を入力します。  
   
-④ 処理実行で処理を開始します。  自動で機械翻訳する場合は少し時間がかかりますので、気長に待ってください。
+④ 「処理実行」で処理を開始します。  自動で機械翻訳する場合は少し時間がかかりますので、気長に待ってください。
   
 ⑤ 終了すると②で指定したフォルダに ModuleManager用のcfgファイル が生成されますので、ModuleManager.dll で読み込ませてください。  
-  ※確認は ModuleManager.dll Ver 2.6.8で行っています。
 
 　　Kerbal Space Program  
-　　　　　+--- GameData  
+　　　　　+--- GameData  <---------- ①で指定するフォルダ
 　　　　　　　+--- Squad  
 　　　　　　　+--- (各MODのフォルダ)   
 　　　　　　　+---  ・  
 　　　　　　　+---  ・  
 　　　　　　　+---  ・  
 　　　　　　　+--- ModuleManager.dll <--- を設置  
-　　　　　　　+--- @ToJapanese  <--- 任意のフォルダを作成し、この中に ②のフォルダ内に作成されたファイルを入れる  
+　　　　　　　+--- @toJapanese  <--- ②で指定するフォルダ名  
   
 
 
@@ -55,15 +55,9 @@ ModuleManager.dll で使用するcfgファイルを作成します。
 
 ③次回処理時に修正した翻訳データを使用するため、翻訳データベースに取り込んでおきます。
 
-④「翻訳済ファイル取込」で 修正した*.cfgファイルを選択し、取り込みます。
+④「翻訳ファイル読込」で ①で修正した*.cfgファイルを選択しで取り込みます。
 
-※有志の方々が翻訳された *.cfgファイルも取り込めるかも。  
-
-
-###翻訳データベースファイル
-
-本実行ファイルと同じ場所に「TranslationDataBase.tsv」がそのファイルです。  
-タブ区切りのテキストファイルです。（文字コードはUTF-8です）  
+※有志の方々が翻訳された ModuleManager用の *.cfgファイルも取り込めるかも。  
 
  
 

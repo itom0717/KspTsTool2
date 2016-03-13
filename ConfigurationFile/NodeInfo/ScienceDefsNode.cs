@@ -51,7 +51,7 @@ namespace KspTsTool2.ConfigurationFile.NodeInfo
         /// <summary>
         ///  key＆text用正規表現
         /// </summary>
-        private Regex RegexResultTextImport = new Regex(@"^@([^=,]+),(\d+)\s*=\s*(.+)", RegexOptions.IgnoreCase);
+        private Regex RegexResultTextImport = new Regex(@"^([^=,]+),(\d+)\s*=\s*(.+)", RegexOptions.IgnoreCase);
 
 
 
@@ -104,8 +104,7 @@ namespace KspTsTool2.ConfigurationFile.NodeInfo
         /// <summary>
         /// サイエンスレポートタイトル
         /// </summary>
-        private List<TextData.TranslateText> ScienceDefsResultText { get; set; } = new List<TextData.TranslateText>();
-
+        private List<TextData.TranslateText> ScienceDefsResultText { get; set; } = null;
 
         /// <summary>
         /// コンストラクタ
@@ -144,7 +143,10 @@ namespace KspTsTool2.ConfigurationFile.NodeInfo
 
                 this.ScienceDefsID = "";
                 this.ScienceDefsTitle = "";
+
+                this.ScienceDefsResultText = new List<TextData.TranslateText>();
                 this.ScienceDefsResultText.Clear();
+
                 this.KeyIndex.Clear();
                 return;
             }
@@ -252,10 +254,11 @@ namespace KspTsTool2.ConfigurationFile.NodeInfo
         /// </summary>
         /// <param name="blockText"></param>
         public void AnalysisOneBlockImport( int nestLevel ,
-                                     string blockText )
+                                            string blockText )
         {
             //正規表現用
             System.Text.RegularExpressions.MatchCollection mc;
+
 
 
             //EXPERIMENT_DEFINITIONノードが見つかったか？
@@ -269,6 +272,8 @@ namespace KspTsTool2.ConfigurationFile.NodeInfo
                 this.InsideNodeResult = false;
 
                 this.ScienceDefsID = mc[ 0 ].Groups[ 1 ].Value;
+
+                this.ScienceDefsResultText = new List<TextData.TranslateText>();
                 this.ScienceDefsResultText.Clear();
                 this.KeyIndex.Clear();
                 return;

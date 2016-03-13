@@ -395,10 +395,11 @@ namespace KspTsTool2.Forms
                 //翻訳データベース
                 var translationDataBase = new Translation.Database.TranslationDataBase();
 
+                //データベースLoad
+                translationDataBase.Load();
+
                 //翻訳データベースへ取り込み
                 int importCount = translationDataBase.ImportTranslationFile(filename);
-
-                translationDataBase = null;
 
                 if ( importCount == 0 )
                 {
@@ -406,8 +407,14 @@ namespace KspTsTool2.Forms
                 }
                 else
                 {
+                    //データベース保存
+                    translationDataBase.Save();
+
                     this.DispErrorMessage( string.Format( "{0} 件取り込みました。" , importCount ) , false );
                 }
+
+                translationDataBase = null;
+
             }
             catch ( Exception ex )
             {
@@ -957,7 +964,7 @@ namespace KspTsTool2.Forms
         private void TranslationBackgroundWorker_RunWorkerCompleted( object sender , RunWorkerCompletedEventArgs e )
         {
 
-            //無効にたボタン類をもとに戻す
+            //無効にしたボタン類をもとに戻す
             this.ChangeEnabledControl( true );
 
             if ( e.Error != null )

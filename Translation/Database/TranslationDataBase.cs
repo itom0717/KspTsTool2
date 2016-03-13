@@ -129,7 +129,7 @@ namespace KspTsTool2.Translation.Database
 
             if ( directoryName.Equals( "" )
                 || cfgFilename.Equals( "" )
-                || translateText.EnglishText.Equals( "" ) )
+                || translateText.SourceText.Equals( "" ) )
             {
                 return;
             }
@@ -200,15 +200,15 @@ namespace KspTsTool2.Translation.Database
 
 
                     //元テキスト変更の場合
-                    if ( !translateText.EnglishText.Equals( ( string ) tgtRow[TranslationDataTable.ColumnNameEnglishText] ) )
+                    if ( !translateText.SourceText.Equals( ( string ) tgtRow[TranslationDataTable.ColumnNameEnglishText] ) )
                     {
                         //英語テキスト変更
-                        this.SetDataValue( tgtRow , TranslationDataTable.ColumnNameEnglishText , translateText.EnglishText );
+                        this.SetDataValue( tgtRow , TranslationDataTable.ColumnNameEnglishText , translateText.SourceText );
                         this.SetDataValue( tgtRow , TranslationDataTable.ColumnNameMemo , "英語テキスト変更" );
 
                         //英語テキスト変更のため再翻訳
                         //翻訳済みテキストと同じデータがあればそれを使用する
-                        sameTextRow = tgtDB.SearchSameText( translateText.EnglishText );
+                        sameTextRow = tgtDB.SearchSameText( translateText.SourceText );
                         if( sameTextRow != null)
                         {
                             translateText.JapaneseText = ( string ) sameTextRow[TranslationDataTable.ColumnNameJapaneseText];
@@ -222,7 +222,7 @@ namespace KspTsTool2.Translation.Database
                     {
                         //未翻訳
                         //翻訳済みテキストと同じデータがあればそれを使用する
-                        sameTextRow = tgtDB.SearchSameText( translateText.EnglishText );
+                        sameTextRow = tgtDB.SearchSameText( translateText.SourceText );
                         if ( sameTextRow != null )
                         {
                             translateText.JapaneseText = ( string ) sameTextRow[TranslationDataTable.ColumnNameJapaneseText];
@@ -235,7 +235,7 @@ namespace KspTsTool2.Translation.Database
                     else if ( tgtRow[TranslationDataTable.ColumnNameAutoTrans].Equals( true ) )
                     {
                         //自動翻訳の場合で、英語データが同じで手動翻訳の場合はそちらを使用する
-                        sameTextRow = tgtDB.SearchSameText( translateText.EnglishText );
+                        sameTextRow = tgtDB.SearchSameText( translateText.SourceText );
                         if ( sameTextRow != null && sameTextRow[TranslationDataTable.ColumnNameAutoTrans].Equals( false ) )
                         {
                             translateText.JapaneseText = ( string ) sameTextRow[TranslationDataTable.ColumnNameJapaneseText];
@@ -251,7 +251,7 @@ namespace KspTsTool2.Translation.Database
                     if ( translateText.JapaneseText.Equals( "" ) && this.TranslatorApi != null )
                     {
                         //自動翻訳
-                        translateText.JapaneseText = this.TranslatorApi.TranslateEnglishToJapanese( translateText.EnglishText );
+                        translateText.JapaneseText = this.TranslatorApi.TranslateEnglishToJapanese( translateText.SourceText );
                         if ( !translateText.JapaneseText.Equals( "" ) )
                         {
                             this.SetDataValue( tgtRow , TranslationDataTable.ColumnNameMemo , "自動翻訳で日本語を取得" );
@@ -305,7 +305,7 @@ namespace KspTsTool2.Translation.Database
                     this.SetDataValue( newRow , TranslationDataTable.ColumnNameMemo , "新規追加" );
 
                     //翻訳済みで英語テキストが同じデータがあればそれを使用する
-                    sameTextRow = tgtDB.SearchSameText( translateText.EnglishText );
+                    sameTextRow = tgtDB.SearchSameText( translateText.SourceText );
                     if ( sameTextRow != null )
                     {
                         translateText.JapaneseText = ( string ) sameTextRow[TranslationDataTable.ColumnNameJapaneseText];
@@ -319,7 +319,7 @@ namespace KspTsTool2.Translation.Database
                         if ( translateText.JapaneseText.Equals( "" ) && this.TranslatorApi != null )
                         {
                             //自動翻訳
-                            translateText.JapaneseText = this.TranslatorApi.TranslateEnglishToJapanese( translateText.EnglishText );
+                            translateText.JapaneseText = this.TranslatorApi.TranslateEnglishToJapanese( translateText.SourceText );
                             if ( !translateText.JapaneseText.Equals( "" ) )
                             {
                                 this.SetDataValue( newRow , TranslationDataTable.ColumnNameMemo , "新規追加：自動翻訳で日本語を取得" );
@@ -331,7 +331,7 @@ namespace KspTsTool2.Translation.Database
                     //フォルダ名
                     this.SetDataValue( newRow , TranslationDataTable.ColumnNameDirName , directoryName );
                     // 元テキスト
-                    this.SetDataValue( newRow , TranslationDataTable.ColumnNameEnglishText , translateText.EnglishText );
+                    this.SetDataValue( newRow , TranslationDataTable.ColumnNameEnglishText , translateText.SourceText );
                     // 日本語テキスト
                     this.SetDataValue( newRow , TranslationDataTable.ColumnNameJapaneseText , translateText.JapaneseText );
                     // cfgファイル名

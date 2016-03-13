@@ -15,9 +15,9 @@
 
 
         /// <summary>
-        /// 英語テキスト
+        /// 読み込みテキスト（翻訳前は英語、翻訳データ取り込み字は日本語になる）
         /// </summary>
-        public string EnglishText { get; private set; } = "";
+        public string SourceText { get; private set; } = "";
 
 
         /// <summary>
@@ -39,11 +39,11 @@
         /// </summary>
         /// <param name="key"></param>
         /// <param name="text"></param>
-        public TranslateText( string   englishText )
+        public TranslateText( string sourceText )
         {
             this.Result.ResultText  = "";
             this.Result.ResultIndex = 0;
-            this.EnglishText  = englishText;
+            this.SourceText = sourceText;
             this.JapaneseText = "";
             this.Comment      = "";
         }
@@ -56,11 +56,11 @@
         /// <param name="englishText"></param>
         public TranslateText( string   keyText ,
                               int      keyIndex,
-                              string   englishText )
+                              string sourceText )
         {
             this.Result.ResultText  = keyText;
             this.Result.ResultIndex = keyIndex;
-            this.EnglishText    = englishText;
+            this.SourceText = sourceText;
             this.JapaneseText   = "";
             this.Comment        = "";
         }

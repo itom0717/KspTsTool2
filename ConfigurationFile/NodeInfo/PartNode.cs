@@ -173,7 +173,7 @@ namespace KspTsTool2.ConfigurationFile.NodeInfo
         /// </summary>
         /// <param name="blockText"></param>
         public void AnalysisOneBlockImport( int nestLevel ,
-                                      string blockText )
+                                            string blockText )
 
         {
 

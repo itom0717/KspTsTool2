@@ -60,9 +60,9 @@ namespace KspTsTool2.ConfigurationFile
                             partData.AppendLine( "\t//Title" );
                             partData.AppendLine( "\t//\t" + textData.PartTitle );
                             partData.AppendLine( "\t//English Text" );
-                            partData.AppendLine( "\t//\t" + String.Format( @"@description = {0}" , textData.TranslateTextList[0].EnglishText ) );
+                            partData.AppendLine( "\t//\t" + String.Format( @"@description = {0}" , textData.TranslateTextList[0].SourceText ) );
                             partData.AppendLine( "\t//Japanese Text" );
-                            if ( textData.TranslateTextList[0].JapaneseText.Equals( "" ) || textData.TranslateTextList[0].JapaneseText.Equals( textData.TranslateTextList[0].EnglishText ) )
+                            if ( textData.TranslateTextList[0].JapaneseText.Equals( "" ) || textData.TranslateTextList[0].JapaneseText.Equals( textData.TranslateTextList[0].SourceText ) )
                             {
                                 partData.AppendLine( "\t//\t" + @"@description = " );
                             }
@@ -106,9 +106,9 @@ namespace KspTsTool2.ConfigurationFile
                             {
 
                                 scienceDefsData.AppendLine( "\t//English Text" );
-                                scienceDefsData.AppendLine( "\t//\t" + String.Format( @"{0},{1} = {2}" , trText.Result.ResultText , trText.Result.ResultIndex , trText.EnglishText ) );
+                                scienceDefsData.AppendLine( "\t//\t" + String.Format( @"{0},{1} = {2}" , trText.Result.ResultText , trText.Result.ResultIndex , trText.SourceText ) );
                                 scienceDefsData.AppendLine( "\t//Japanese Text" );
-                                if ( trText.JapaneseText.Equals( "" ) || trText.JapaneseText.Equals( trText.EnglishText ) )
+                                if ( trText.JapaneseText.Equals( "" ) || trText.JapaneseText.Equals( trText.SourceText ) )
                                 {
                                     scienceDefsData.AppendLine( "\t//\t" + String.Format( @"{0},{1} = " , trText.Result.ResultText , trText.Result.ResultIndex ) );
                                 }

@@ -6,10 +6,10 @@ using System.Runtime.InteropServices;
 // アセンブリに関連付けられている情報を変更するには、
 // これらの属性値を変更してください。
 [assembly: AssemblyTitle( "KspTsTool2" )]
-[assembly: AssemblyDescription( "Kerbal Space Program 自動翻訳プログラム" )]
+[assembly: AssemblyDescription( "Kerbal Space Program 自動翻訳プログラム V2" )]
 [assembly: AssemblyConfiguration( "" )]
 [assembly: AssemblyCompany( "" )]
-[assembly: AssemblyProduct( "Kerbal Space Program Translation Support Tool" )]
+[assembly: AssemblyProduct( "Kerbal Space Program Translation Support Tool V2" )]
 [assembly: AssemblyCopyright( "Copyright © 2016 itom0717" )]
 [assembly: AssemblyTrademark( "" )]
 [assembly: AssemblyCulture( "" )]

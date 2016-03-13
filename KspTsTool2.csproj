@@ -126,12 +126,20 @@
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>mkdir $(TargetDir)$(SolutionName)
-copy $(TargetPath) $(TargetDir)$(SolutionName)
-copy $(ProjectDir)HISTORY.txt $(TargetDir)$(SolutionName)
-copy $(ProjectDir)README.md $(TargetDir)$(SolutionName)
-copy $(ProjectDir)LICENSE.txt $(TargetDir)$(SolutionName)
-copy $(ProjectDir)Microsoft_Translator_APIの使い方.txt $(TargetDir)$(SolutionName)</PostBuildEvent>
+    <PostBuildEvent>if not $(ConfigurationName)==Release goto skip
+
+mkdir $(TargetDir)$(SolutionName)
+copy $(TargetPath) $(TargetDir)$(SolutionName)\
+copy $(ProjectDir)HISTORY.txt $(TargetDir)$(SolutionName)\
+copy $(ProjectDir)README.md $(TargetDir)$(SolutionName)\
+copy $(ProjectDir)LICENSE.txt $(TargetDir)$(SolutionName)\
+copy $(ProjectDir)Microsoft_Translator_APIの使い方.txt $(TargetDir)$(SolutionName)\
+
+
+
+
+
+:skip</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <PreBuildEvent>rmdir  /s /q $(TargetDir)$(SolutionName)</PreBuildEvent>

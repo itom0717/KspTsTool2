@@ -149,13 +149,13 @@ namespace KspTsTool2.ConfigurationFile
                         //インポートモード
                         //パーツ
                         this.PartNode.AnalysisOneBlockImport(
-                                                    this.NestLevel ,
-                                                    blockTextRight[j] );
+                                                this.NestLevel ,
+                                                blockTextRight[j] );
 
                         //サイエンスレポート
                         this.ExperimentDefinitionNode.AnalysisOneBlockImport(
-                                                    this.NestLevel ,
-                                                    blockTextRight[j] );
+                                                this.NestLevel ,
+                                                blockTextRight[j] );
                     }
 
 
