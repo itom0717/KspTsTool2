@@ -36,7 +36,7 @@ namespace KspTsTool2.Forms
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void MainForm_Load( object sender , EventArgs e )
+        private void MainForm_Load( object sender, EventArgs e )
         {
 
             ///旧バージョンの設定値を引き継ぐ
@@ -117,7 +117,7 @@ namespace KspTsTool2.Forms
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void MainForm_FormClosed( object sender , FormClosedEventArgs e )
+        private void MainForm_FormClosed( object sender, FormClosedEventArgs e )
         {
             //設定値を記憶
             Properties.Settings.Default.SaveFolderName = this.SaveFolderNameTextBox.Text;
@@ -154,7 +154,7 @@ namespace KspTsTool2.Forms
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void MainForm_FormClosing( object sender , FormClosingEventArgs e )
+        private void MainForm_FormClosing( object sender, FormClosingEventArgs e )
         {
             //バックグラウンド処理中であれば中止確認する
             if ( this.TranslationBackgroundWorker.IsBusy )
@@ -168,7 +168,7 @@ namespace KspTsTool2.Forms
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void CloseButton_Click( object sender , EventArgs e )
+        private void CloseButton_Click( object sender, EventArgs e )
         {
             this.Close();
         }
@@ -178,7 +178,7 @@ namespace KspTsTool2.Forms
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void SettingButton_Click( object sender , EventArgs e )
+        private void SettingButton_Click( object sender, EventArgs e )
         {
             var form = new Forms.SettingsForm();
             form.ShowDialog();
@@ -189,7 +189,7 @@ namespace KspTsTool2.Forms
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void SaveFolderNameTextBox_Validating( object sender , CancelEventArgs e )
+        private void SaveFolderNameTextBox_Validating( object sender, CancelEventArgs e )
         {
             var textBox = (TextBox)sender;
             string saveFolder =  textBox.Text;
@@ -212,7 +212,7 @@ namespace KspTsTool2.Forms
         private string ConfirmationSaveFolderName( string saveFolder )
         {
             //禁止文字を削除
-            saveFolder = Common.File.ChangeInvalidFileName( saveFolder , "" );
+            saveFolder = Common.File.ChangeInvalidFileName( saveFolder, "" );
 
             //前後のスペースを消す
             saveFolder = saveFolder.Trim();
@@ -233,9 +233,9 @@ namespace KspTsTool2.Forms
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void TargetFolderComboBox_Enter( object sender , EventArgs e )
+        private void TargetFolderComboBox_Enter( object sender, EventArgs e )
         {
-            this.ToolTip.SetToolTip( this.TargetFolderComboBox , "Deleteキーで現在選択されている処理対象フォルダを一覧から消去します。" );
+            this.ToolTip.SetToolTip( this.TargetFolderComboBox, "Deleteキーで現在選択されている処理対象フォルダを一覧から消去します。" );
         }
 
         /// <summary>
@@ -243,9 +243,9 @@ namespace KspTsTool2.Forms
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void TargetFolderComboBox_Leave( object sender , EventArgs e )
+        private void TargetFolderComboBox_Leave( object sender, EventArgs e )
         {
-            this.ToolTip.SetToolTip( this.TargetFolderComboBox , "" );
+            this.ToolTip.SetToolTip( this.TargetFolderComboBox, "" );
         }
 
         /// <summary>
@@ -253,7 +253,7 @@ namespace KspTsTool2.Forms
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void SelectTargetFolderButton_Click( object sender , EventArgs e )
+        private void SelectTargetFolderButton_Click( object sender, EventArgs e )
         {
             //フォルダ選択
             //FolderBrowserDialogクラスのインスタンスを作成
@@ -289,7 +289,7 @@ namespace KspTsTool2.Forms
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void OpenTargetFolderButton_Click( object sender , EventArgs e )
+        private void OpenTargetFolderButton_Click( object sender, EventArgs e )
         {
             //対象フォルダ
             string tgtPath = this.TargetFolderComboBox.Text;
@@ -318,7 +318,7 @@ namespace KspTsTool2.Forms
             }
             catch
             {
-                this.DispErrorMessage( "フォルダを開くことができません。" ,
+                this.DispErrorMessage( "フォルダを開くことができません。",
                                        true );
                 return;
             }
@@ -331,7 +331,7 @@ namespace KspTsTool2.Forms
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void ImportFileButton_Click( object sender , EventArgs e )
+        private void ImportFileButton_Click( object sender, EventArgs e )
         {
             string filename = "";
 
@@ -340,7 +340,7 @@ namespace KspTsTool2.Forms
                 || !Common.File.ExistsDirectory( this.ImportTranslationFilePath ) )
             {
                 //未設定or存在しないので、保存先フォルダを初期値として設定
-                this.ImportTranslationFilePath = Common.File.CombinePath( this.TargetFolderComboBox.Text.Trim() , this.SaveFolderNameTextBox.Text.Trim() );
+                this.ImportTranslationFilePath = Common.File.CombinePath( this.TargetFolderComboBox.Text.Trim(), this.SaveFolderNameTextBox.Text.Trim() );
                 if ( !Common.File.ExistsDirectory( this.ImportTranslationFilePath ) )
                 {
                     //存在しない場合はデスクトップ
@@ -403,14 +403,14 @@ namespace KspTsTool2.Forms
 
                 if ( importCount == 0 )
                 {
-                    this.DispErrorMessage( string.Format( "取り込むデータはありません。" , importCount ) , false );
+                    this.DispErrorMessage( string.Format( "取り込むデータはありません。", importCount ), false );
                 }
                 else
                 {
                     //データベース保存
                     translationDataBase.Save();
 
-                    this.DispErrorMessage( string.Format( "{0} 件取り込みました。" , importCount ) , false );
+                    this.DispErrorMessage( string.Format( "{0} 件取り込みました。", importCount ), false );
                 }
 
                 translationDataBase = null;
@@ -418,7 +418,7 @@ namespace KspTsTool2.Forms
             }
             catch ( Exception ex )
             {
-                this.DispErrorMessage( ex.Message , true );
+                this.DispErrorMessage( ex.Message, true );
                 return;
             }
         }
@@ -429,7 +429,7 @@ namespace KspTsTool2.Forms
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void CancelTranslationButton_Click( object sender , EventArgs e )
+        private void CancelTranslationButton_Click( object sender, EventArgs e )
         {
             //バックグラウンド処理中であれば中止確認する
             if ( this.TranslationBackgroundWorker.IsBusy )
@@ -458,6 +458,10 @@ namespace KspTsTool2.Forms
             this.SettingButton.Enabled = isEnable;
 
             this.IsAfterOpenFolderCheckBox.Enabled = isEnable;
+
+            this.ImportFileButton.Enabled = isEnable;
+
+
         }
 
 
@@ -467,9 +471,9 @@ namespace KspTsTool2.Forms
         /// <returns></returns>
         private bool ConfirmCancel()
         {
-            if ( MessageBox.Show( "処理を中止しますか？" ,
-                                 "" ,
-                                 MessageBoxButtons.OKCancel ,
+            if ( MessageBox.Show( "処理を中止しますか？",
+                                 "",
+                                 MessageBoxButtons.OKCancel,
                                  MessageBoxIcon.Question ) != DialogResult.OK )
             {
                 return false;
@@ -517,7 +521,7 @@ namespace KspTsTool2.Forms
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void TargetFolderComboBox_KeyDown( object sender , KeyEventArgs e )
+        private void TargetFolderComboBox_KeyDown( object sender, KeyEventArgs e )
         {
             if ( e.KeyCode == Keys.Delete )//Deleteキーで削除
             {
@@ -543,12 +547,12 @@ namespace KspTsTool2.Forms
         /// <summary>
         /// エラーメッセージなどを表示する
         /// </summary>
-        private void DispErrorMessage( string errMsg ,
+        private void DispErrorMessage( string errMsg,
                                         bool isError = false )
         {
-            MessageBox.Show( errMsg ,
-                             "" ,
-                             MessageBoxButtons.OK ,
+            MessageBox.Show( errMsg,
+                             "",
+                             MessageBoxButtons.OK,
                              ( isError ? MessageBoxIcon.Error : MessageBoxIcon.Information ) );
         }
 
@@ -566,7 +570,7 @@ namespace KspTsTool2.Forms
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void TranslationButton_Click( object sender , EventArgs e )
+        private void TranslationButton_Click( object sender, EventArgs e )
         {
             //設定値チェック
 
@@ -597,14 +601,14 @@ namespace KspTsTool2.Forms
                         this.DispErrorMessage( "「保存フォルダ名」を指定してください。" );
                         return;
                     }
-                    this.SettingsParameters.SavePath = Common.File.CombinePath( this.SettingsParameters.GameDataPath ,
+                    this.SettingsParameters.SavePath = Common.File.CombinePath( this.SettingsParameters.GameDataPath,
                                                                                 this.SettingsParameters.SaveFolderName );
                     if ( !Common.File.ExistsDirectory( this.SettingsParameters.SavePath ) )
                     {
                         //フォルダが存在しない時の確認
-                        if ( MessageBox.Show( "保存先のフォルダが存在しません。\n「" + this.SettingsParameters.SaveFolderName + "」フォルダを作成しますか？" ,
-                                             "" ,
-                                             MessageBoxButtons.OKCancel ,
+                        if ( MessageBox.Show( "保存先のフォルダが存在しません。\n「" + this.SettingsParameters.SaveFolderName + "」フォルダを作成しますか？",
+                                             "",
+                                             MessageBoxButtons.OKCancel,
                                              MessageBoxIcon.Question ) != DialogResult.OK )
                         {
                             return;
@@ -615,9 +619,9 @@ namespace KspTsTool2.Forms
                     else if ( !Common.File.IsEmptyDirectory( this.SettingsParameters.SavePath ) )
                     {
                         //空欄でないための確認
-                        if ( MessageBox.Show( "保存先のフォルダにファイルが存在します。\nファイルを上書きしますか？" ,
-                                             "" ,
-                                             MessageBoxButtons.OKCancel ,
+                        if ( MessageBox.Show( "保存先のフォルダにファイルが存在します。\nファイルを上書きしますか？",
+                                             "",
+                                             MessageBoxButtons.OKCancel,
                                              MessageBoxIcon.Question ) != DialogResult.OK )
                         {
                             return;
@@ -650,9 +654,9 @@ namespace KspTsTool2.Forms
 
 
                 //処理開始を確認
-                if ( MessageBox.Show( "処理を実行しますか？" ,
-                         "" ,
-                         MessageBoxButtons.OKCancel ,
+                if ( MessageBox.Show( "処理を実行しますか？",
+                         "",
+                         MessageBoxButtons.OKCancel,
                          MessageBoxIcon.Question ) != DialogResult.OK )
                 {
                     return;
@@ -680,7 +684,7 @@ namespace KspTsTool2.Forms
             catch ( Exception ex )
             {
                 //エラー表示
-                this.DispErrorMessage( ex.Message , true );
+                this.DispErrorMessage( ex.Message, true );
                 this.Close();
             }
         }
@@ -690,7 +694,7 @@ namespace KspTsTool2.Forms
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void TranslationBackgroundWorker_DoWork( object sender , DoWorkEventArgs e )
+        private void TranslationBackgroundWorker_DoWork( object sender, DoWorkEventArgs e )
         {
             //BackgroundWorker
             var bw = (BackgroundWorker)sender;
@@ -704,7 +708,7 @@ namespace KspTsTool2.Forms
             {
                 //自動翻訳あり
                 translationDataBase
-                    = new Translation.Database.TranslationDataBase( settingsParameters.MicrosoftTranslatorAPIClientId ,
+                    = new Translation.Database.TranslationDataBase( settingsParameters.MicrosoftTranslatorAPIClientId,
                                                                     settingsParameters.MicrosoftTranslatorAPIClientSecret );
             }
             else
@@ -781,7 +785,7 @@ namespace KspTsTool2.Forms
 
 
                     //対象外のフォルダ
-                    if ( this.SettingsParameters.SaveFolderName.Equals( configurationFolder.DirectoryName ,
+                    if ( this.SettingsParameters.SaveFolderName.Equals( configurationFolder.DirectoryName,
                                                                         StringComparison.CurrentCultureIgnoreCase ) )
                     {
                         //保存先フォルダは対象外なので、次のフォルダへ
@@ -872,10 +876,10 @@ namespace KspTsTool2.Forms
 
 
                                 //翻訳処理
-                                translationDataBase.Translate( configurationFolder.DirectoryName ,
-                                                               cfgFilename ,
-                                                               textData ,
-                                                               trText ,
+                                translationDataBase.Translate( configurationFolder.DirectoryName,
+                                                               cfgFilename,
+                                                               textData,
+                                                               trText,
                                 ( textData.DataType == ConfigurationFile.TextData.DataType.Part ? dataOrderParts++ : dataOrderScienceDefs++ ) );
                             }
                         }
@@ -902,7 +906,7 @@ namespace KspTsTool2.Forms
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void TranslationBackgroundWorker_ProgressChanged( object sender , ProgressChangedEventArgs e )
+        private void TranslationBackgroundWorker_ProgressChanged( object sender, ProgressChangedEventArgs e )
         {
             var statusText = (ProgressStatus.StatusText)e.UserState;
 
@@ -963,7 +967,7 @@ namespace KspTsTool2.Forms
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void TranslationBackgroundWorker_RunWorkerCompleted( object sender , RunWorkerCompletedEventArgs e )
+        private void TranslationBackgroundWorker_RunWorkerCompleted( object sender, RunWorkerCompletedEventArgs e )
         {
 
             //無効にしたボタン類をもとに戻す
@@ -974,7 +978,7 @@ namespace KspTsTool2.Forms
                 //エラー発生のため、エラー内容表示
                 this.AppendLogText( "エラー発生" );
                 this.AppendLogText( e.Error.Message );
-                this.DispErrorMessage( e.Error.Message , true );
+                this.DispErrorMessage( e.Error.Message, true );
             }
             else if ( e.Cancelled )
             {
@@ -1004,7 +1008,7 @@ namespace KspTsTool2.Forms
                 {
                     //ログをテキストファイルへ保存する
                     string logFilename = Common.File.CombinePath (Common.File.GetApplicationDirectory(), "logfile.txt");
-                    using ( var sw = new System.IO.StreamWriter( logFilename , false , System.Text.Encoding.UTF8 ) )
+                    using ( var sw = new System.IO.StreamWriter( logFilename, false, System.Text.Encoding.UTF8 ) )
                     {
                         foreach ( string text in this.LogMessageListBox.Items )
                         {
@@ -1014,7 +1018,7 @@ namespace KspTsTool2.Forms
                 }
                 catch ( System.Exception ex )
                 {
-                    this.DispErrorMessage( ex.Message , true );
+                    this.DispErrorMessage( ex.Message, true );
                 }
             }
         }
