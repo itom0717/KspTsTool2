@@ -54,7 +54,7 @@ namespace KspTsTool2.ConfigurationFile
                             string pName = textData.PartName;
                             pName = pName.Replace( " " , "?" );
 
-                            partData.AppendLine( String.Format( "@PART[{0}]" , pName ) );
+                            partData.AppendLine( String.Format( "@PART[{0}]:NEEDS[{1}]:FINAL", pName, this.DirectoryName ) );
                             partData.AppendLine( "{" );
 
                             partData.AppendLine( "\t//Title" );
@@ -94,7 +94,7 @@ namespace KspTsTool2.ConfigurationFile
                     {
                         if ( textData.TranslateTextList.Count >= 1 )
                         {
-                            scienceDefsData.AppendLine( String.Format( "@EXPERIMENT_DEFINITION:HAS[#id[{0}]]" , textData.ScienceDefsID ) );
+                            scienceDefsData.AppendLine( String.Format( "@EXPERIMENT_DEFINITION:HAS[#id[{0}]]:NEEDS[{1}]:FINAL", textData.ScienceDefsID, this.DirectoryName ) );
                             scienceDefsData.AppendLine( "{" );
                             scienceDefsData.AppendLine( "\t//Title" );
                             scienceDefsData.AppendLine( "\t//\t" + textData.ScienceDefsTitle );

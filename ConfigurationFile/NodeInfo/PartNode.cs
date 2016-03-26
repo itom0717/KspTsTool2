@@ -17,19 +17,25 @@ namespace KspTsTool2.ConfigurationFile.NodeInfo
         private Regex RegexPart = new Regex(@"^PART($|\s)", RegexOptions.IgnoreCase);
 
         /// <summary>
+        /// Part用正規表現(ModulManagerで追加したパーツ)
+        /// </summary>
+        private Regex RegexPartAddPart = new Regex(@"^\+PART\[", RegexOptions.IgnoreCase);
+
+
+        /// <summary>
         /// Name用正規表現
         /// </summary>
-        private Regex RegexName = new Regex(@"^Name\s*=\s*(.+)$", RegexOptions.IgnoreCase);
+        private Regex RegexName = new Regex(@"^[@]*Name\s*=\s*(.+)$", RegexOptions.IgnoreCase);
 
         /// <summary>
         /// title用正規表現
         /// </summary>
-        private Regex RegexTitle  = new Regex(@"^title\s*=\s*(.+)$", RegexOptions.IgnoreCase);
+        private Regex RegexTitle  = new Regex(@"^[@]*title\s*=\s*(.+)$", RegexOptions.IgnoreCase);
 
         /// <summary>
         /// description用正規表現
         /// </summary>
-        private Regex RegexrDescription  = new Regex(@"^description\s*=\s*(.+)$", RegexOptions.IgnoreCase);
+        private Regex RegexrDescription  = new Regex(@"^[@]*description\s*=\s*(.+)$", RegexOptions.IgnoreCase);
 
 
         /// <summary>
@@ -101,7 +107,8 @@ namespace KspTsTool2.ConfigurationFile.NodeInfo
             System.Text.RegularExpressions.MatchCollection mc;
 
             //ノードが見つかったか？
-            if ( !this.InsideNode && nestLevel == 0 && this.RegexPart.IsMatch( blockText ) )
+            if ( !this.InsideNode && nestLevel == 0
+                && ( this.RegexPart.IsMatch( blockText ) || this.RegexPartAddPart.IsMatch( blockText ) ) )
             {
                 //ノードが見つかった
                 this.FindNode = true;
@@ -113,6 +120,7 @@ namespace KspTsTool2.ConfigurationFile.NodeInfo
 
                 return;
             }
+
 
             //ノードの中に入ったか確認
             if ( this.FindNode && !this.InsideNode && nestLevel == 1 )
