@@ -110,7 +110,7 @@ namespace KspTsTool2.ConfigurationFile
                                 scienceDefsData.AppendLine( "\t//Japanese Text" );
                                 if ( trText.JapaneseText.Equals( "" ) || trText.JapaneseText.Equals( trText.SourceText ) )
                                 {
-                                    scienceDefsData.AppendLine( "\t//\t" + String.Format( @"{0},{1} = " , trText.Result.ResultText , trText.Result.ResultIndex ) );
+                                    scienceDefsData.AppendLine( "\t//\t" + String.Format( @"@{0},{1} = " , trText.Result.ResultText , trText.Result.ResultIndex ) );
                                 }
                                 else
                                 {
@@ -118,7 +118,7 @@ namespace KspTsTool2.ConfigurationFile
                                     {
                                         scienceDefsData.AppendLine( "\t//\t" + trText.Comment );
                                     }
-                                    scienceDefsData.AppendLine( "\t\t" + String.Format( @"{0},{1} = {2}" , trText.Result.ResultText , trText.Result.ResultIndex , trText.JapaneseText ) );
+                                    scienceDefsData.AppendLine( "\t\t" + String.Format( @"@{0},{1} = {2}" , trText.Result.ResultText , trText.Result.ResultIndex , trText.JapaneseText ) );
                                 }
                                 scienceDefsData.AppendLine( "" );
 
