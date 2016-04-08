@@ -1,4 +1,4 @@
-Kerbal Space Program Translation Support Tool 2
+Kerbal Space Program Translation Support Tool 2 for KSP 1.1
 ====
 
 このプログラムは Kerbal Space Program のパーツおよびサイエンスレポートの説明文を抽出し、Microsoft Translator APIを使用して自動で機械翻訳します。  
@@ -43,7 +43,6 @@ ModuleManager.dll で使用するcfgファイルを作成します。
 　　　　　　　+--- ModuleManager.dll <--- を設置  
 　　　　　　　+--- @toJapanese  <--- ②で指定するフォルダ名  
   
-
 
 ###自分で翻訳または日本語を修正する場合  
 機械翻訳では（ほとんど）意味が通じないので、自分で修正してください。  
