@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace KspTsTool2.Translation.MicrosoftTranslatorAPI
+namespace KspTsTool2.MicrosoftTranslatorAPI
 {
     /// <summary>
     /// アクセストークン

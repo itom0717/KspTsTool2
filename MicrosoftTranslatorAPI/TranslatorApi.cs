@@ -3,7 +3,7 @@ using System.IO;
 using System.Net;
 using System.Text;
 
-namespace KspTsTool2.Translation.MicrosoftTranslatorAPI
+namespace KspTsTool2.MicrosoftTranslatorAPI
 {
     /// <summary>
     /// Microsoft Translator APIを使用した自動翻訳

@@ -1,16 +1,13 @@
-﻿using System.Collections.Generic;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 
 
-
-namespace KspTsTool2.ConfigurationFile.NodeInfo
+namespace KspTsTool2.ConfigurationData.NodeInfo
 {
     /// <summary>
     /// PartData解析
     /// </summary>
-    public class PartNode
+    public class NodeAnalysisParts : NodeAnalysis
     {
-
         /// <summary>
         /// Part用正規表現
         /// </summary>
@@ -48,13 +45,7 @@ namespace KspTsTool2.ConfigurationFile.NodeInfo
         /// </summary>
         private Regex RegexrDescriptionImport  = new Regex(@"@description\s*=\s*(.+)", RegexOptions.IgnoreCase);
 
-       
 
-
-        /// <summary>
-        /// 翻訳テキストデータ
-        /// </summary>
-        private List<TextData.TextData> TextDataList { get; set; }
 
         /// <summary>
         /// ノードが見つかった
@@ -87,20 +78,18 @@ namespace KspTsTool2.ConfigurationFile.NodeInfo
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        public PartNode( List<TextData.TextData> textDataList )
+        public NodeAnalysisParts()
         {
             this.FindNode = false;
             this.InsideNode = false;
-            this.TextDataList = textDataList;
-            this.TextDataList.Clear();
         }
 
         /// <summary>
         /// 1ブロック解析
         /// </summary>
         /// <param name="blockText"></param>
-        public void AnalysisOneBlock( int nestLevel ,
-                                      string blockText )
+        public  override  void AnalysisOneBlock( int nestLevel ,
+                                               string blockText )
         {
 
             //正規表現用
@@ -139,11 +128,11 @@ namespace KspTsTool2.ConfigurationFile.NodeInfo
                 //翻訳元テキストデータを記憶する
                 if ( !this.PartName.Equals( "" ) )
                 {
-                    var textData = new TextData.TextData();
-                    textData.SetPartText( this.PartName ,
+                    this.TextDataList.Add(
+                            new Text.TextDataParts( this.PartName ,
                                           this.PartTitle ,
-                                          this.PartDescription );
-                    this.TextDataList.Add( textData );
+                                          this.PartDescription )
+                                          );
                 }
             }
 
@@ -173,6 +162,8 @@ namespace KspTsTool2.ConfigurationFile.NodeInfo
                     this.PartDescription = mc[0].Groups[1].Value;
                 }
             }
+
+
         }
 
 
@@ -180,8 +171,8 @@ namespace KspTsTool2.ConfigurationFile.NodeInfo
         /// 1ブロック解析(インポートモード時)
         /// </summary>
         /// <param name="blockText"></param>
-        public void AnalysisOneBlockImport( int nestLevel ,
-                                            string blockText )
+        public override void AnalysisOneBlockImport( int nestLevel ,
+                                                    string blockText )
 
         {
 
@@ -196,11 +187,11 @@ namespace KspTsTool2.ConfigurationFile.NodeInfo
                 this.FindNode = true;
                 this.InsideNode = false;
 
-                this.PartName = mc[ 0 ].Groups[ 1 ].Value;
+                this.PartName = mc[0].Groups[1].Value;
                 this.PartDescription = "";
 
                 //スペースが含まれている場合は、？に変換されているので、?をスペースへ変換
-               this.PartName = this.PartName.Replace( "?" , " " );
+                this.PartName = this.PartName.Replace( "?" , " " );
 
                 return;
             }
@@ -222,11 +213,11 @@ namespace KspTsTool2.ConfigurationFile.NodeInfo
                 //翻訳元テキストデータを記憶する
                 if ( !this.PartName.Equals( "" ) )
                 {
-                    var textData = new TextData.TextData();
-                    textData.SetPartText( this.PartName ,
-                                          "" ,
-                                          this.PartDescription );
-                    this.TextDataList.Add( textData );
+                    this.TextDataList.Add(
+                        new Text.TextDataParts(this.PartName ,
+                                                "" ,
+                                                this.PartDescription)
+                                          );
                 }
             }
 
@@ -243,7 +234,6 @@ namespace KspTsTool2.ConfigurationFile.NodeInfo
                 }
             }
         }
-
 
     }
 }

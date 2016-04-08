@@ -6,6 +6,7 @@ using System.Windows.Forms;
 
 namespace KspTsTool2.Forms
 {
+
     /// <summary>
     /// メインフォーム
     /// </summary>
@@ -393,7 +394,7 @@ namespace KspTsTool2.Forms
             try
             {
                 //翻訳データベース
-                var translationDataBase = new Translation.Database.TranslationDataBase();
+                var translationDataBase = new ConfigurationData.TranslationDataBase();
 
                 //データベースLoad
                 translationDataBase.Load();
@@ -703,19 +704,19 @@ namespace KspTsTool2.Forms
             var settingsParameters = (SettingsParameters)e.Argument;
 
             //翻訳データベースインスタンス
-            Translation.Database.TranslationDataBase translationDataBase;
+            ConfigurationData.TranslationDataBase translationDataBase;
             if ( settingsParameters.IsMachineTranslation )
             {
                 //自動翻訳あり
                 translationDataBase
-                    = new Translation.Database.TranslationDataBase( settingsParameters.MicrosoftTranslatorAPIClientId,
-                                                                    settingsParameters.MicrosoftTranslatorAPIClientSecret );
+                    = new ConfigurationData.TranslationDataBase( settingsParameters.MicrosoftTranslatorAPIClientId,
+                                                                 settingsParameters.MicrosoftTranslatorAPIClientSecret );
             }
             else
             {
                 //自動翻訳なし
                 translationDataBase
-                    = new Translation.Database.TranslationDataBase();
+                    = new ConfigurationData.TranslationDataBase();
             }
 
             //進行状況表示処理用処理定義
@@ -736,8 +737,8 @@ namespace KspTsTool2.Forms
                 const string StatusTextTranslate =   @" --- 翻訳処理({0,3}/{1,3}) ";
 
 
-                ConfigurationFile.ConfigurationFolder configurationFolder;
-                ConfigurationFile.ConfigurationFile   configurationFile;
+                ConfigurationData.ConfigurationFolder configurationFolder;
+                ConfigurationData.ConfigurationFile   configurationFile;
 
 
                 //表示リセット
@@ -768,7 +769,7 @@ namespace KspTsTool2.Forms
 
 
                     //フォルダ情報のインスタンス作成
-                    configurationFolder = new ConfigurationFile.ConfigurationFolder();
+                    configurationFolder = new ConfigurationData.ConfigurationFolder();
 
                     //ディレクトリ名のみにする
                     configurationFolder.DirectoryName = Common.File.GetFileName( Common.File.DeleteDirectorySeparator( tgtDirectory ) );
@@ -809,8 +810,6 @@ namespace KspTsTool2.Forms
                     progressStatus.CfgFileMaxCount = cfgList.Count;
 
                     //cfgファイルを１ファイルづつ処理する
-                    int dataOrderParts = 1;
-                    int dataOrderScienceDefs = 1;
                     foreach ( string cfgFile in cfgList )
                     {
                         System.Threading.Thread.Sleep( 1 ); //wait
@@ -820,6 +819,7 @@ namespace KspTsTool2.Forms
                             e.Cancel = true;
                             return;
                         }
+
 
 
                         string cfgFilename =  cfgFile.Substring(  tgtDirectory.Length+1 ) ;
@@ -832,7 +832,14 @@ namespace KspTsTool2.Forms
 
 
                         //cfgファイルを１ファイル
-                        configurationFile = new ConfigurationFile.ConfigurationFile();
+                        configurationFile = new ConfigurationData.ConfigurationFile();
+
+                        if ( !Common.File.GetExtension( cfgFile ).Equals( "cfg" ,StringComparison.CurrentCultureIgnoreCase ) )
+                        {
+                            //拡張子がcfg以外は何もしない
+                            progressStatus.DispStatus( msgCfgFile + " --- 対象外ファイル" );
+                            continue;
+                        }
 
                         //cfgファイルを読み込んで解析
                         if ( !configurationFile.AnalysisCfgFile( cfgFile ) )
@@ -847,19 +854,12 @@ namespace KspTsTool2.Forms
 
                         //翻訳処理
                         progressStatus.TranslationMaxCount = configurationFile.TranslationMaxCount;
-                        foreach ( ConfigurationFile.TextData.TextData textData in configurationFile.TextDataList )
+                        foreach ( ConfigurationData.Text.TextData textData in configurationFile.TextDataList )
                         {
-                            foreach ( ConfigurationFile.TextData.TranslateText trText in textData.TranslateTextList )
+                            foreach ( ConfigurationData.Translate.TranslateText translateText in textData.TranslateTextList )
                             {
                                 System.Threading.Thread.Sleep( 1 ); //wait
-                                //if ( bw.CancellationPending )//キャンセルされたか調べる
-                                //{
-                                //    //キャンセルされた
-                                //    e.Cancel = true;
-                                //    return;
-                                //}
-
-
+     
                                 progressStatus.TranslationNowCount++;
                                 if ( progressStatus.TranslationMaxCount <= 1 )
                                 {
@@ -879,15 +879,14 @@ namespace KspTsTool2.Forms
                                 translationDataBase.Translate( configurationFolder.DirectoryName,
                                                                cfgFilename,
                                                                textData,
-                                                               trText,
-                                ( textData.DataType == ConfigurationFile.TextData.DataType.Part ? dataOrderParts++ : dataOrderScienceDefs++ ) );
+                                                               translateText );
                             }
                         }
 
                     }
 
                     //Module Manager用cfgファイルに保存する
-                    //データがなければファイルは作成しない（すでに存在した場合はファイル削除）
+                    //データがなければファイルは作成しない
                     configurationFolder.ExportModuleManagerCfgFile();
 
                     progressStatus.DispStatus( "" );
@@ -909,20 +908,22 @@ namespace KspTsTool2.Forms
         private void TranslationBackgroundWorker_ProgressChanged( object sender, ProgressChangedEventArgs e )
         {
             var statusText = (ProgressStatus.StatusText)e.UserState;
+            int progressPercentage;
 
             //プログレスバーの値を変更する
             if ( e.ProgressPercentage < this.TranslationProgressBar.Minimum )
             {
-                this.TranslationProgressBar.Value = this.TranslationProgressBar.Minimum;
+                progressPercentage = this.TranslationProgressBar.Minimum;
             }
             else if ( this.TranslationProgressBar.Maximum < e.ProgressPercentage )
             {
-                this.TranslationProgressBar.Value = this.TranslationProgressBar.Maximum;
+                progressPercentage = this.TranslationProgressBar.Maximum;
             }
             else
             {
-                this.TranslationProgressBar.Value = e.ProgressPercentage;
+                progressPercentage = e.ProgressPercentage;
             }
+            this.TranslationProgressBar.Value = progressPercentage;
 
 
             //ログメッセージ
@@ -936,7 +937,15 @@ namespace KspTsTool2.Forms
                 //ログを追加
                 if ( statusText.AddLogText != null )
                 {
-                    this.AppendLogText( statusText.AddLogText );
+                    if( statusText.AddLogText != "")
+                    {
+                        //this.AppendLogText( String.Format( "({1:000}%) - {0}" , statusText.AddLogText , progressPercentage ) );
+                        this.AppendLogText( String.Format( "{0}" , statusText.AddLogText ) );
+                    }
+                    else
+                    {
+                        this.AppendLogText( "" );
+                    }
                 }
             }
 

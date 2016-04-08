@@ -1,14 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-namespace KspTsTool2.ConfigurationFile.NodeInfo
+namespace KspTsTool2.ConfigurationData.NodeInfo
 {
     /// <summary>
-    /// EXPERIMENT_DEFINITION解析
+    /// サイエンスレポート解析
     /// </summary>
-    public class ScienceDefsNode
+    public class NodeAnalysisScienceDefs : NodeAnalysis
     {
-
 
         /// <summary>
         ///  EXPERIMENT_DEFINITION用正規表現
@@ -54,17 +53,10 @@ namespace KspTsTool2.ConfigurationFile.NodeInfo
         private Regex RegexResultTextImport = new Regex(@"^([^=,]+),(\d+)\s*=\s*(.+)", RegexOptions.IgnoreCase);
 
 
-
-        /// <summary>
-        /// 翻訳テキストデータ
-        /// </summary>
-        private List<TextData.TextData> TextDataList { get; set; }
-
-
         /// <summary>
         /// KeyIndex
         /// </summary>
-        private Common.HashtableEx KeyIndex { get; set; } = new Common.HashtableEx();
+        private Dictionary< string , int > KeyIndex = new Dictionary< string , int>();
 
 
         /// <summary>
@@ -94,40 +86,41 @@ namespace KspTsTool2.ConfigurationFile.NodeInfo
         /// <summary>
         /// サイエンスレポートID
         /// </summary>
-        private string ScienceDefsID;
+        private string ScienceDefsID { get; set; }
 
         /// <summary>
         /// サイエンスレポートタイトル
         /// </summary>
-        private string ScienceDefsTitle;
+        private string ScienceDefsTitle { get; set; }
 
         /// <summary>
         /// サイエンスレポートタイトル
         /// </summary>
-        private List<TextData.TranslateText> ScienceDefsResultText { get; set; } = null;
+        private List<Translate.TranslateText> ScienceDefsResultText { get; set; } = null;
+
+
+
 
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        public ScienceDefsNode( List<TextData.TextData> textDataList )
+        public NodeAnalysisScienceDefs()
         {
             this.FindNode = false;
             this.InsideNode = false;
             this.FindNodeResult = false;
             this.InsideNodeResult = false;
-            this.TextDataList = textDataList;
-            this.TextDataList.Clear();
             this.KeyIndex.Clear();
         }
+
 
         /// <summary>
         /// 1ブロック解析
         /// </summary>
         /// <param name="blockText"></param>
-        public void AnalysisOneBlock( int nestLevel ,
-                                     string blockText )
+        public override void AnalysisOneBlock( int nestLevel ,
+                                               string blockText )
         {
-
             //正規表現用
             System.Text.RegularExpressions.MatchCollection mc;
 
@@ -144,7 +137,7 @@ namespace KspTsTool2.ConfigurationFile.NodeInfo
                 this.ScienceDefsID = "";
                 this.ScienceDefsTitle = "";
 
-                this.ScienceDefsResultText = new List<TextData.TranslateText>();
+                this.ScienceDefsResultText = new List<Translate.TranslateText>();
                 this.ScienceDefsResultText.Clear();
 
                 this.KeyIndex.Clear();
@@ -169,10 +162,11 @@ namespace KspTsTool2.ConfigurationFile.NodeInfo
                 //翻訳元テキストデータを記憶する
                 if ( !this.ScienceDefsID.Equals( "" ) )
                 {
-                    var textData = new TextData.TextData();
-                    textData.SetScienceDefsText( this.ScienceDefsID , this.ScienceDefsTitle , this.ScienceDefsResultText );
-
-                    this.TextDataList.Add( textData );
+                    this.TextDataList.Add(
+                        new Text.TextDataScienceDefs(   this.ScienceDefsID ,
+                                                        this.ScienceDefsTitle ,
+                                                        this.ScienceDefsResultText )
+                                         );
                 }
             }
 
@@ -226,36 +220,36 @@ namespace KspTsTool2.ConfigurationFile.NodeInfo
                     string resultText  = mc[0].Groups[1].Value.Trim();
                     int    resultIndex = 0;
                     string text     = mc[0].Groups[2].Value.Trim();
-
-                    if ( this.KeyIndex.ContainsKey( resultText ) )
+                    if ( this.KeyIndex.ContainsKey( resultText.ToUpper() ) )
                     {
-                        resultIndex = ( int ) this.KeyIndex[resultText];
+                        resultIndex = this.KeyIndex[resultText.ToUpper()];
                         resultIndex++;
-                        this.KeyIndex[resultText] = resultIndex;
+                        this.KeyIndex[resultText.ToUpper()] = resultIndex;
                     }
                     else
                     {
                         resultIndex = 0;
-                        this.KeyIndex.Add( resultText , resultIndex );
+                        this.KeyIndex.Add( resultText.ToUpper() , resultIndex );
                     }
 
-                    this.ScienceDefsResultText.Add( new TextData.TranslateText( resultText ,
+                    this.ScienceDefsResultText.Add( new Translate.TranslateTextScienceDefs( resultText ,
                                                                                 resultIndex ,
                                                                                 text ) );
                 }
             }
+
         }
 
 
-
-
         /// <summary>
-        /// 1ブロック解析（インポートモード時）
+        /// 1ブロック解析(インポートモード時)
         /// </summary>
         /// <param name="blockText"></param>
-        public void AnalysisOneBlockImport( int nestLevel ,
-                                            string blockText )
+        public override void AnalysisOneBlockImport( int nestLevel ,
+                                                    string blockText )
+
         {
+
             //正規表現用
             System.Text.RegularExpressions.MatchCollection mc;
 
@@ -271,9 +265,9 @@ namespace KspTsTool2.ConfigurationFile.NodeInfo
                 this.FindNodeResult = false;
                 this.InsideNodeResult = false;
 
-                this.ScienceDefsID = mc[ 0 ].Groups[ 1 ].Value;
+                this.ScienceDefsID = mc[0].Groups[1].Value;
 
-                this.ScienceDefsResultText = new List<TextData.TranslateText>();
+                this.ScienceDefsResultText = new List<Translate.TranslateText>();
                 this.ScienceDefsResultText.Clear();
                 this.KeyIndex.Clear();
                 return;
@@ -297,10 +291,11 @@ namespace KspTsTool2.ConfigurationFile.NodeInfo
                 //翻訳元テキストデータを記憶する
                 if ( !this.ScienceDefsID.Equals( "" ) )
                 {
-                    var textData = new TextData.TextData();
-                    textData.SetScienceDefsText( this.ScienceDefsID , "", this.ScienceDefsResultText );
-
-                    this.TextDataList.Add( textData );
+                    this.TextDataList.Add(
+                        new Text.TextDataScienceDefs( this.ScienceDefsID ,
+                                                      "" ,
+                                                      this.ScienceDefsResultText )
+                                          );
                 }
             }
 
@@ -338,13 +333,11 @@ namespace KspTsTool2.ConfigurationFile.NodeInfo
                     int    resultIndex = int.Parse(mc[0].Groups[2].Value.Trim());
                     string text        = mc[0].Groups[3].Value.Trim();
 
-                    this.ScienceDefsResultText.Add( new TextData.TranslateText( resultText ,
+                    this.ScienceDefsResultText.Add( new Translate.TranslateTextScienceDefs( resultText ,
                                                                                 resultIndex ,
                                                                                 text ) );
                 }
             }
-
-
         }
 
     }

@@ -1,18 +1,18 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-namespace KspTsTool2.ConfigurationFile
+namespace KspTsTool2.ConfigurationData
 {
     /// <summary>
     /// cfgファイル解析
     /// </summary>
     public class ConfigurationFile
     {
-
         /// <summary>
         /// テキストデータ
         /// </summary>
-        public  List<TextData.TextData> TextDataList =  new List<TextData.TextData>();
+        public  List<Text.TextData> TextDataList =  new List<Text.TextData>();
 
         /// <summary>
         /// CURLY BRACKET({/})のネストレベル
@@ -20,19 +20,15 @@ namespace KspTsTool2.ConfigurationFile
         private int NestLevel;
 
         /// <summary>
-        /// Paet Nodeの状態
+        /// Node解析クラス
         /// </summary>
-        private NodeInfo.PartNode PartNode;
-
-        /// <summary>
-        /// EXPERIMENT_DEFINITION Nodeの状態
-        /// </summary>
-        private NodeInfo.ScienceDefsNode ExperimentDefinitionNode;
+        private Dictionary< DataType, NodeInfo.NodeAnalysis > NodeAnalysis = new Dictionary< DataType, NodeInfo.NodeAnalysis>();
 
         /// <summary>
         /// cfgファイル名
         /// </summary>
         private string CfgFilename= "";
+
 
         /// <summary>
         /// ファイルを読み込んで、解析する
@@ -42,31 +38,30 @@ namespace KspTsTool2.ConfigurationFile
         /// <returns>
         /// 対象データが存在した場合、trueを返す。
         /// </returns>
-        public bool AnalysisCfgFile( string cfgFile,
-                                     bool importFileMode = false)
+        public bool AnalysisCfgFile( string cfgFile ,
+                                     bool importFileMode = false )
         {
             //処理ファイル名
             this.CfgFilename = cfgFile;
 
-
             try
             {
-                //取得するデータは
-                //PART内のName,title,description
-                //EXPERIMENT_DEFINITION内のidとtitle
-                //EXPERIMENT_DEFINITION内の内のRESULTS内の値
-                //PARTにEXPERIMENT_DEFINITIONは存在しない。
-                //EXPERIMENT_DEFINITIONにPARTは存在しない。
-
-                //正規表現定義
-
                 //コメント削除用
                 var regexComment = new Regex( "//.*$" , RegexOptions.IgnoreCase );
 
                 //初期化
                 this.NestLevel = 0;
-                this.PartNode = new NodeInfo.PartNode( this.TextDataList );
-                this.ExperimentDefinitionNode = new NodeInfo.ScienceDefsNode( this.TextDataList );
+                this.TextDataList.Clear();
+
+                //DataTypeを列挙
+                foreach ( DataType dataType in Enum.GetValues( typeof( DataType ) ) )
+                {
+                    //Node解析用定義
+                    Type t = Type.GetType(typeof( NodeInfo.NodeAnalysis ).FullName + Enum.GetName(typeof(DataType), dataType));
+                    object nodeAnalysis = Activator.CreateInstance(t);
+                    this.NodeAnalysis.Add( dataType , ( NodeInfo.NodeAnalysis ) nodeAnalysis );
+                    this.NodeAnalysis[dataType].TextDataList = this.TextDataList;
+                }
 
                 //ファイルの解析
                 using ( var sr = new System.IO.StreamReader( cfgFile , System.Text.Encoding.UTF8 ) )
@@ -132,30 +127,25 @@ namespace KspTsTool2.ConfigurationFile
                     //1ブロック解析
 
 
-                    if(!importFileMode )
+                    //DataTypeを列挙
+                    foreach ( DataType dataType in Enum.GetValues( typeof( DataType ) ) )
                     {
-                        //パーツ
-                        this.PartNode.AnalysisOneBlock(
-                                                    this.NestLevel ,
-                                                    blockTextRight[j] );
-
-                        //サイエンスレポート
-                        this.ExperimentDefinitionNode.AnalysisOneBlock(
-                                                    this.NestLevel ,
-                                                    blockTextRight[j] );
-                    }
-                    else
-                    {
-                        //インポートモード
-                        //パーツ
-                        this.PartNode.AnalysisOneBlockImport(
-                                                this.NestLevel ,
-                                                blockTextRight[j] );
-
-                        //サイエンスレポート
-                        this.ExperimentDefinitionNode.AnalysisOneBlockImport(
-                                                this.NestLevel ,
-                                                blockTextRight[j] );
+                        if ( !importFileMode )
+                        {
+                            //解析時
+                            this.NodeAnalysis[dataType].AnalysisOneBlock(
+                                                        this.NestLevel ,
+                                                        blockTextRight[j]
+                                                        );
+                        }
+                        else
+                        {
+                            //インポート時
+                            this.NodeAnalysis[dataType].AnalysisOneBlockImport(
+                                                        this.NestLevel ,
+                                                        blockTextRight[j]
+                                                        );
+                        }
                     }
 
 
@@ -176,18 +166,17 @@ namespace KspTsTool2.ConfigurationFile
 
 
         /// <summary>
-        /// 翻訳件数
+        /// 翻訳する総件数を返す
         /// </summary>
-
         public int TranslationMaxCount
         {
             get
             {
                 int count = 0;
 
-                foreach ( TextData.TextData textData in this.TextDataList )
+                foreach ( Text.TextData textData in this.TextDataList )
                 {
-                    foreach ( TextData.TranslateText trText in textData.TranslateTextList )
+                    foreach ( Translate.TranslateText trText in textData.TranslateTextList )
                     {
                         count++;
                     }

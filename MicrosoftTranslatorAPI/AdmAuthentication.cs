@@ -3,7 +3,7 @@ using System.Runtime.Serialization.Json;
 using System;
 
 
-namespace KspTsTool2.Translation.MicrosoftTranslatorAPI
+namespace KspTsTool2.MicrosoftTranslatorAPI
 {
     /// <summary>
     /// Microsoft Translator APIを使用した自動翻訳でAccessTokenを取得

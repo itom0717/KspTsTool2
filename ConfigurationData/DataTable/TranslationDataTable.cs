@@ -3,13 +3,20 @@ using System.Data;
 using System.Xml;
 
 
-namespace KspTsTool2.Translation.Database
+namespace KspTsTool2.ConfigurationData.DataTable
 {
     /// <summary>
     /// データテーブル
     /// </summary>
-    public class TranslationDataTable : DataTable
+    /// <remarks>
+    /// TranslationDataTable + DataType名でそれぞれのクラスを継承で作成すること
+    /// </remarks>
+    public abstract class TranslationDataTable : System.Data.DataTable
     {
+        /// <summary>
+        /// 翻訳DataTableファイル名
+        /// </summary>
+        protected string TranslationDataTableFilePath = "";
 
 
 
@@ -24,51 +31,6 @@ namespace KspTsTool2.Translation.Database
         /// cfgファイル名
         /// </summary>
         public static string ColumnNameCgfFileName  = @"CfgFile";
-
-
-
-
-        /// <summary>
-        /// パーツ名
-        /// </summary>
-        public static string ColumnNamePartName  = @"Name";
-
-        /// <summary>
-        /// パーツタイトル
-        /// </summary>
-        public static string ColumnNamePartTitle  = @"Title";
-
-
-
-
-
-
-        /// <summary>
-        /// サイエンスレポートID
-        /// </summary>
-        public static string ColumnNameScienceDefsID  = @"ID";
-
-        /// <summary>
-        /// サイエンスレポートタイトル
-        /// </summary>
-        public static string ColumnNameScienceDefsTitle  = @"Title";
-
-        /// <summary>
-        /// サイエンスレポートResultText
-        /// </summary>
-        public static string ColumnNameResultText  = @"ResultText";
-
-
-        /// <summary>
-        /// サイエンスレポートResultIndex
-        /// </summary>
-        public static string ColumnNameResultIndex  = @"ResultIndex";
-
-
-
-
-
-
 
 
         /// <summary>
@@ -88,7 +50,6 @@ namespace KspTsTool2.Translation.Database
 
 
 
-
         /// <summary>
         /// 追加日
         /// </summary>
@@ -102,12 +63,6 @@ namespace KspTsTool2.Translation.Database
 
 
         /// <summary>
-        /// データタイプ
-        /// </summary>
-        private ConfigurationFile.TextData.DataType dataType;
-
-
-        /// <summary>
         /// SortOrder
         /// </summary>
         public static string ColumnNameSortOrder  = @"SortOrder";
@@ -117,41 +72,34 @@ namespace KspTsTool2.Translation.Database
         /// </summary>
         public static string ColumnNameExists  = @"Exists";
 
-
         /// <summary>
         /// 自動翻訳データ
         /// </summary>
         public static string ColumnNameAutoTrans  = @"AutoTrans";
 
+
         /// <summary>
-        /// コンストラクタ
+        /// カラムの順番定義用（DataTypeの項目を追加する場所の指定用）
         /// </summary>
-        /// <param name=""></param>
-        public TranslationDataTable()
-        {
-            //GetChangesで必要なデフォルトコンストラクタ
-        }
+        protected int SetOrdinalCount = 0;
 
 
         /// <summary>
         /// コンストラクタ
         /// </summary>
         /// <remarks></remarks>
-        public TranslationDataTable( ConfigurationFile.TextData.DataType dataType )
+        public TranslationDataTable( DataType dataType )
         {
-            //データタイプ
-            this.dataType = dataType;
 
-            if ( this.dataType == ConfigurationFile.TextData.DataType.Part )
-            {
-                //tableName設定
-                this.TableName = @"TranslationData";
-            }
-            else
-            {
-                //tableName設定
-                this.TableName = @"TranslationData";
-            }
+            //データベース保存ファイル名フルパス
+            this.TranslationDataTableFilePath =
+                Common.File.CombinePath( Common.File.GetApplicationDirectory() ,
+                                         Enum.GetName( typeof( DataType ) , dataType )
+                                         + "TranslationDB.xml" );
+
+
+            //tableName設定
+            this.TableName = @"TranslationData";
 
 
             // フォルダ名
@@ -161,8 +109,9 @@ namespace KspTsTool2.Translation.Database
                 column.AllowDBNull = false;
 
                 column.ColumnMapping = MappingType.Attribute;
-
+                column.SetOrdinal( SetOrdinalCount++ );
             }
+
             // cfgファイル名
             {
                 var column = this.Columns.Add( ColumnNameCgfFileName , typeof( System.String ) );
@@ -170,57 +119,15 @@ namespace KspTsTool2.Translation.Database
                 column.AllowDBNull = false;
 
                 column.ColumnMapping = MappingType.Attribute;
-
+                column.SetOrdinal( SetOrdinalCount++ );
             }
 
 
-            if ( this.dataType == ConfigurationFile.TextData.DataType.Part )
-            {
-                // パーツ名
-                {
-                    var column = this.Columns.Add( ColumnNamePartName , typeof( System.String ) );
-                    column.DefaultValue = "";
-                    column.AllowDBNull = false;
-                }
-                // パーツタイトル
-                {
-                    var column = this.Columns.Add( ColumnNamePartTitle , typeof( System.String ) );
-                    column.DefaultValue = "";
-                    column.AllowDBNull = false;
-                }
 
-            }
-            else
-            {
+            //ここの間に各DataTypeの項目を追加するため、SetOrdinalCountのカウントは以下不要
 
-                // パーツ名/サイエンスレポートID
-                {
-                    var column = this.Columns.Add( ColumnNameScienceDefsID , typeof( System.String ) );
-                    column.DefaultValue = "";
-                    column.AllowDBNull = false;
-                }
-                // パーツタイトル/サイエンスレポートタイトル
-                {
-                    var column = this.Columns.Add( ColumnNameScienceDefsTitle , typeof( System.String ) );
-                    column.DefaultValue = "";
-                    column.AllowDBNull = false;
-                }
 
-                // サイエンスレポートResultText
-                {
-                    var column = this.Columns.Add( ColumnNameResultText , typeof( System.String ) );
-                    column.DefaultValue = "";
-                    column.AllowDBNull = false;
-                }
 
-                // サイエンスレポートResultIndex
-                {
-                    var column = this.Columns.Add( ColumnNameResultIndex , typeof( System.String ) );
-                    column.DefaultValue = "0";
-                    column.AllowDBNull = false;
-                }
-
-            }
 
 
             // 英語テキスト
@@ -290,19 +197,19 @@ namespace KspTsTool2.Translation.Database
                 column.AllowDBNull = false;
                 column.ColumnMapping = MappingType.Attribute;
             }
-    }
+        }
 
 
 
         /// <summary>
         /// データベース読み込み
         /// </summary>
-        public void Load( string dbFileName )
+        public void Load()
         {
-            if ( Common.File.ExistsFile( dbFileName ) )
+            if ( Common.File.ExistsFile( this.TranslationDataTableFilePath ) )
             {
                 //ファイル存在あり
-                using ( System.IO.StreamReader sr = new System.IO.StreamReader( dbFileName ,
+                using ( System.IO.StreamReader sr = new System.IO.StreamReader( this.TranslationDataTableFilePath ,
                                                                                 new System.Text.UTF8Encoding( false ) ) )
                 {
                     this.ReadXml( sr );
@@ -320,7 +227,7 @@ namespace KspTsTool2.Translation.Database
         /// <summary>
         /// データベース保存
         /// </summary>
-        public void Save( string dbFileName )
+        public void Save()
         {
             if ( this.GetChanges() == null )
             {
@@ -330,7 +237,7 @@ namespace KspTsTool2.Translation.Database
 
 
             //*.tmpファイル名生成
-            string tmpFilename = Common.File.GetWithoutExtension( dbFileName ) + ".tmp";
+            string tmpFilename = Common.File.GetWithoutExtension( this.TranslationDataTableFilePath ) + ".tmp";
             if ( Common.File.ExistsFile( tmpFilename ) )
             {
                 //*.tmpが存在したら消す
@@ -348,15 +255,15 @@ namespace KspTsTool2.Translation.Database
 
                 //ソートしてXML保存する
                 var sortOrder = new System.Text.StringBuilder();
-                sortOrder.Append(ColumnNameDirName + " ASC");
-                sortOrder.Append( ",");
-                sortOrder.Append( ColumnNameExists + " DESC");
-                sortOrder.Append( ",");
-                sortOrder.Append( ColumnNameSortOrder + " ASC");
+                sortOrder.Append( ColumnNameDirName + " ASC" );
+                sortOrder.Append( "," );
+                sortOrder.Append( ColumnNameExists + " DESC" );
+                sortOrder.Append( "," );
+                sortOrder.Append( ColumnNameSortOrder + " ASC" );
 
 
                 // dtのスキーマや制約をコピーしたDataTableを作成します。
-                DataTable sortTable =  this.Clone();
+                System.Data.DataTable sortTable =  this.Clone();
                 DataRow[] rows      =  this.Select(null, sortOrder.ToString());
                 foreach ( DataRow row in rows )
                 {
@@ -374,21 +281,21 @@ namespace KspTsTool2.Translation.Database
 
 
             //Bakファイル作成
-            if ( Common.File.ExistsFile( dbFileName ) )
+            if ( Common.File.ExistsFile( this.TranslationDataTableFilePath ) )
             {
                 for ( int i = 9; i >= 0; i-- )
                 {
-                    string file1 = Common.File.GetWithoutExtension( dbFileName ) + (i == 0 ? ".bak" : ".bk" + i.ToString());
+                    string file1 = Common.File.GetWithoutExtension( this.TranslationDataTableFilePath ) + (i == 0 ? ".bak" : ".bk" + i.ToString());
                     if ( Common.File.ExistsFile( file1 ) )
                     {
                         //存在したら消す
                         Common.File.DeleteFile( file1 );
                     }
-                    string file2 = Common.File.GetWithoutExtension( dbFileName );
+                    string file2 = Common.File.GetWithoutExtension( this.TranslationDataTableFilePath );
                     switch ( i - 1 )
                     {
                         case -1:
-                            file2 += "." + Common.File.GetExtension( dbFileName );
+                            file2 += "." + Common.File.GetExtension( this.TranslationDataTableFilePath );
                             break;
                         case 0:
                             file2 += ".bak";
@@ -407,7 +314,7 @@ namespace KspTsTool2.Translation.Database
 
 
             //*.tmpを*.xmlへ変更
-            Common.File.MoveFile( tmpFilename , dbFileName );
+            Common.File.MoveFile( tmpFilename , this.TranslationDataTableFilePath );
 
             //正常に保存できたら、変更無しに設定
             this.AcceptChanges();
@@ -456,7 +363,30 @@ namespace KspTsTool2.Translation.Database
         }
 
 
+        /// <summary>
+        /// 値が異なっていたらデータをセットする。
+        /// </summary>
+        public void SetDataValue( DataRow row , string columnName , object value )
+        {
+            if ( !row[columnName].Equals( value ) )
+            {
+                row[columnName] = value;
+            }
+        }
 
+        /// <summary>
+        /// DBに存在するかチェック
+        /// </summary>
+        public abstract DataRow[] GetExistsDataRow( string directoryName ,
+                                                    Text.TextData textData ,
+                                                    Translate.TranslateText translateText );
+
+        /// <summary>
+        /// タイトル等データをセット
+        /// </summary>
+        public abstract void SetTitleData( DataRow row ,
+                             Text.TextData textData ,
+                             Translate.TranslateText translateText );
 
 
     }

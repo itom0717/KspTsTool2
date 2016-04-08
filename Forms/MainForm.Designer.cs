@@ -56,7 +56,7 @@
             // CloseButton
             // 
             this.CloseButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.CloseButton.Location = new System.Drawing.Point(511, 307);
+            this.CloseButton.Location = new System.Drawing.Point(799, 475);
             this.CloseButton.Name = "CloseButton";
             this.CloseButton.Size = new System.Drawing.Size(81, 23);
             this.CloseButton.TabIndex = 4;
@@ -83,7 +83,7 @@
             this.TargetFolderComboBox.FormattingEnabled = true;
             this.TargetFolderComboBox.Location = new System.Drawing.Point(35, 39);
             this.TargetFolderComboBox.Name = "TargetFolderComboBox";
-            this.TargetFolderComboBox.Size = new System.Drawing.Size(370, 23);
+            this.TargetFolderComboBox.Size = new System.Drawing.Size(658, 23);
             this.TargetFolderComboBox.Sorted = true;
             this.TargetFolderComboBox.TabIndex = 1;
             this.TargetFolderComboBox.Enter += new System.EventHandler(this.TargetFolderComboBox_Enter);
@@ -93,7 +93,7 @@
             // SelectTargetFolderButton
             // 
             this.SelectTargetFolderButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.SelectTargetFolderButton.Location = new System.Drawing.Point(424, 40);
+            this.SelectTargetFolderButton.Location = new System.Drawing.Point(712, 40);
             this.SelectTargetFolderButton.Name = "SelectTargetFolderButton";
             this.SelectTargetFolderButton.Size = new System.Drawing.Size(82, 23);
             this.SelectTargetFolderButton.TabIndex = 2;
@@ -104,7 +104,7 @@
             // OpenTargetFolderButton
             // 
             this.OpenTargetFolderButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.OpenTargetFolderButton.Location = new System.Drawing.Point(512, 40);
+            this.OpenTargetFolderButton.Location = new System.Drawing.Point(800, 40);
             this.OpenTargetFolderButton.Name = "OpenTargetFolderButton";
             this.OpenTargetFolderButton.Size = new System.Drawing.Size(58, 23);
             this.OpenTargetFolderButton.TabIndex = 3;
@@ -128,7 +128,7 @@
             this.SaveFolderNameTextBox.Font = new System.Drawing.Font("MS UI Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.SaveFolderNameTextBox.Location = new System.Drawing.Point(35, 84);
             this.SaveFolderNameTextBox.Name = "SaveFolderNameTextBox";
-            this.SaveFolderNameTextBox.Size = new System.Drawing.Size(370, 22);
+            this.SaveFolderNameTextBox.Size = new System.Drawing.Size(658, 22);
             this.SaveFolderNameTextBox.TabIndex = 5;
             this.SaveFolderNameTextBox.Validating += new System.ComponentModel.CancelEventHandler(this.SaveFolderNameTextBox_Validating);
             // 
@@ -147,7 +147,7 @@
             this.TranslationGroupBox.Controls.Add(this.OpenTargetFolderButton);
             this.TranslationGroupBox.Location = new System.Drawing.Point(15, 3);
             this.TranslationGroupBox.Name = "TranslationGroupBox";
-            this.TranslationGroupBox.Size = new System.Drawing.Size(577, 139);
+            this.TranslationGroupBox.Size = new System.Drawing.Size(865, 139);
             this.TranslationGroupBox.TabIndex = 0;
             this.TranslationGroupBox.TabStop = false;
             // 
@@ -165,7 +165,7 @@
             // 
             this.CancelTranslationButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.CancelTranslationButton.ForeColor = System.Drawing.Color.Red;
-            this.CancelTranslationButton.Location = new System.Drawing.Point(424, 79);
+            this.CancelTranslationButton.Location = new System.Drawing.Point(712, 79);
             this.CancelTranslationButton.Name = "CancelTranslationButton";
             this.CancelTranslationButton.Size = new System.Drawing.Size(146, 23);
             this.CancelTranslationButton.TabIndex = 7;
@@ -177,7 +177,7 @@
             // 
             this.TranslationButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.TranslationButton.ForeColor = System.Drawing.Color.Blue;
-            this.TranslationButton.Location = new System.Drawing.Point(424, 108);
+            this.TranslationButton.Location = new System.Drawing.Point(712, 108);
             this.TranslationButton.Name = "TranslationButton";
             this.TranslationButton.Size = new System.Drawing.Size(146, 23);
             this.TranslationButton.TabIndex = 8;
@@ -195,7 +195,7 @@
             this.LogGroupBox.Controls.Add(this.TranslationProgressBar);
             this.LogGroupBox.Location = new System.Drawing.Point(15, 148);
             this.LogGroupBox.Name = "LogGroupBox";
-            this.LogGroupBox.Size = new System.Drawing.Size(577, 153);
+            this.LogGroupBox.Size = new System.Drawing.Size(865, 321);
             this.LogGroupBox.TabIndex = 1;
             this.LogGroupBox.TabStop = false;
             this.LogGroupBox.Text = "処理ログ";
@@ -204,7 +204,7 @@
             // 
             this.IsSaveLogFileCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.IsSaveLogFileCheckBox.AutoSize = true;
-            this.IsSaveLogFileCheckBox.Location = new System.Drawing.Point(6, 131);
+            this.IsSaveLogFileCheckBox.Location = new System.Drawing.Point(6, 299);
             this.IsSaveLogFileCheckBox.Name = "IsSaveLogFileCheckBox";
             this.IsSaveLogFileCheckBox.Size = new System.Drawing.Size(128, 16);
             this.IsSaveLogFileCheckBox.TabIndex = 2;
@@ -220,7 +220,7 @@
             this.LogMessageListBox.ItemHeight = 12;
             this.LogMessageListBox.Location = new System.Drawing.Point(6, 47);
             this.LogMessageListBox.Name = "LogMessageListBox";
-            this.LogMessageListBox.Size = new System.Drawing.Size(565, 76);
+            this.LogMessageListBox.Size = new System.Drawing.Size(853, 244);
             this.LogMessageListBox.TabIndex = 1;
             // 
             // TranslationProgressBar
@@ -229,13 +229,13 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.TranslationProgressBar.Location = new System.Drawing.Point(5, 18);
             this.TranslationProgressBar.Name = "TranslationProgressBar";
-            this.TranslationProgressBar.Size = new System.Drawing.Size(565, 23);
+            this.TranslationProgressBar.Size = new System.Drawing.Size(853, 23);
             this.TranslationProgressBar.TabIndex = 0;
             // 
             // SettingButton
             // 
             this.SettingButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.SettingButton.Location = new System.Drawing.Point(424, 307);
+            this.SettingButton.Location = new System.Drawing.Point(712, 475);
             this.SettingButton.Name = "SettingButton";
             this.SettingButton.Size = new System.Drawing.Size(81, 23);
             this.SettingButton.TabIndex = 3;
@@ -252,7 +252,7 @@
             // ImportFileButton
             // 
             this.ImportFileButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.ImportFileButton.Location = new System.Drawing.Point(21, 307);
+            this.ImportFileButton.Location = new System.Drawing.Point(21, 475);
             this.ImportFileButton.Name = "ImportFileButton";
             this.ImportFileButton.Size = new System.Drawing.Size(111, 23);
             this.ImportFileButton.TabIndex = 2;
@@ -264,7 +264,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(604, 342);
+            this.ClientSize = new System.Drawing.Size(892, 510);
             this.Controls.Add(this.ImportFileButton);
             this.Controls.Add(this.SettingButton);
             this.Controls.Add(this.LogGroupBox);

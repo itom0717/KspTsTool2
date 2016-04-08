@@ -39,6 +39,7 @@
             /// 追加ログテキスト
             /// </summary>
             public string AddLogText { get; set; } = "";
+
         }
 
 
@@ -73,6 +74,7 @@
         }
 
 
+
         /// <summary>
         /// 現在のパーセント
         /// </summary>
@@ -80,6 +82,7 @@
         {
             get
             {
+
                 //計算で求める
                 double returnValue = 0.0;
 
@@ -103,9 +106,8 @@
                 {
                     return returnValue;
                 }
-                double p3 = p2 / this.CfgFileMaxCount;
+                double p3 = p2 / this.TranslationMaxCount;
                 returnValue += p3 * ( this.TranslationNowCount - 1 );
-
 
                 return returnValue;
             }
