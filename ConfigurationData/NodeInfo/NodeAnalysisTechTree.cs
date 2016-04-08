@@ -16,12 +16,13 @@ namespace KspTsTool2.ConfigurationData.NodeInfo
         /// <summary>
         ///  RDNode用正規表現
         /// </summary>
-        private Regex RegexRDNode = new Regex(@"^RDNode($|\s)", RegexOptions.IgnoreCase);
+        private Regex RegexRDNode = new Regex(@"^RDNode($|\s|:)", RegexOptions.IgnoreCase);
 
         /// <summary>
         ///  RDNode用正規表現(Import/ModuleManage定義)
         /// </summary>
         private Regex RegexRDNodeImport = new Regex(@"^@RDNode\s*:\s*HAS\s*\[\s*#id\s*\[\s*(.+?)\s*\]\s*\]", RegexOptions.IgnoreCase);
+
 
         /// <summary>
         ///  id用正規表現
@@ -152,31 +153,28 @@ namespace KspTsTool2.ConfigurationData.NodeInfo
             //RDNodeノードが見つかったか？
             if ( this.InsideNodeTechTree && !this.InsideNodeRDNode && nestLevel == 1 )
             {
-                if ( RegexRDNode.IsMatch( blockText ) )
+                if ( blockText != "" )
                 {
-                    //RDNodeノードが見つかった
-                    this.FindNodeRDNode = true;
-                    this.InsideNodeRDNode = false;
-
-                    this.TechTreeID = "";
-                    this.TechTreeTitle = "";
-                    this.TechTreeDescription = "";
-                }
-                else
-                {
-                    if ( blockText != "" )
+                    mc = this.RegexRDNodeImport.Matches( blockText );
+                    if ( mc.Count >= 1 )
                     {
-                        mc = this.RegexRDNodeImport.Matches( blockText );
-                        if ( mc.Count >= 1 )
-                        {
-                            //RDNodeノードが見つかった
-                            this.FindNodeRDNode = true;
-                            this.InsideNodeRDNode = false;
+                        //RDNodeノードが見つかった
+                        this.FindNodeRDNode = true;
+                        this.InsideNodeRDNode = false;
 
-                            this.TechTreeID = mc[0].Groups[1].Value;
-                            this.TechTreeTitle = "";
-                            this.TechTreeDescription = "";
-                        }
+                        this.TechTreeID = mc[0].Groups[1].Value;
+                        this.TechTreeTitle = "";
+                        this.TechTreeDescription = "";
+                    }
+                    else  if ( this.RegexRDNode.IsMatch( blockText ) )
+                    {
+                        //RDNodeノードが見つかった
+                        this.FindNodeRDNode = true;
+                        this.InsideNodeRDNode = false;
+
+                        this.TechTreeID = "";
+                        this.TechTreeTitle = "";
+                        this.TechTreeDescription = "";
                     }
                 }
             }
