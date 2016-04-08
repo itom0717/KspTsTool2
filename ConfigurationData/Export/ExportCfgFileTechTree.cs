@@ -78,7 +78,7 @@ namespace KspTsTool2.ConfigurationData.Export
             //データが存在する場合
             if( exportData .Length>0 )
             {
-                exportData.Insert( 0 , "@TechTree {\n" );
+                exportData.Insert( 0 , "@TechTree:FINAL {\n" );
                 exportData.AppendLine("}");
             }
 
