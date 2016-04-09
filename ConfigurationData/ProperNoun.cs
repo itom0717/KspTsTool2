@@ -190,7 +190,7 @@ namespace KspTsTool2.ConfigurationData
             {
                 if ( replaceTable.DirectoryName == "" || replaceTable.DirectoryName == directoryName )
                 {
-                    var regexReplace = new Regex( @"(^|\s*|"")" + "(" + replaceTable.OriginalText + ")" + @"($|\s|""|\.|\?|\!)"  );
+                    var regexReplace = new Regex( @"(^|\s*|"")" + "(" + replaceTable.OriginalText + ")" + @"($|\s|""|,|\.|\?|\!)"  );
                     System.Text.RegularExpressions.MatchCollection mc = regexReplace.Matches( replaceText.ToString() );
                     if ( mc.Count >= 1 )
                     {
