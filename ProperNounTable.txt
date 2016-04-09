@@ -1,0 +1,139 @@
+#固有名詞テーブル
+# #（シャープ）以降はコメントです。
+# [directoryName] で以降限定とする。
+# [] で全データ対象
+# 元テキスト tab 翻訳テキスト　で設定する。翻訳しない場合は同じ値をセット
+
+
+#天体
+[]
+Kerbol
+Moho
+Eve
+Gilly
+Kerbin
+Mun
+Minmus
+Duna
+Ike
+Dres
+Jool
+Laythe
+Vall
+Tylo
+Bop
+Pol
+Eeloo
+
+
+#固有名詞/専門用語
+[]
+Jebediah Kerman
+Goo
+EVA	船外活動
+Clamp-O-Tron
+
+
+#メーカー
+[]
+Alnair Design Bureau
+Anatid Robotics
+Ark Propulsions
+AT Industries
+Blackleg Industries
+C7 Aerospace
+C7 Aerospace Division
+CONTARES
+CYBUTEK Solutions Ltd.
+Dinkelstein Kerman's Construction Emporium
+Experimental Engineering Group
+FLOOYD Dynamics Labs
+FLOOYD Dynamics Research Labs
+Found behind the Clamp-O-Tron factory
+Fuel Tanks Plus
+Goddard's Girders
+Goliath National Products
+Hmmm
+Insanity Aerospace
+Integrated Integrals
+Ionic Symphonic Protonic Electronics
+Jebediah Kerman's Junkyard
+Jebediah Kerman's Junkyard
+K&K Advanced Orbit
+K&K Life-Support Devision
+KashCorp
+Kerbal Materials Corporation
+Kerbal Motion LLC
+KerbinSide
+Kerbodyne
+Kerlington Model Rockets
+Kerlington Model Rockets
+Kerman Corridors
+KW Rocketry
+Lithobrake Exploration Technologies
+Magic Smoke Industries
+Maniacal Mallard Industries
+Maxo Construction Toys
+Modular Rocket Systems
+Moving Parts Experts Group
+Multiversal Mechatronics
+O.M.B. Demolition Enterprises
+O.M.B. Demolition Enterprises
+Orbital Space Industries
+Orbital Space Industries
+Ordan Industrial
+PanzerLabs AeroSpace
+Paper Products Inc
+Paper Products Inc.
+Periapsis Rocket Supplies Co
+Probodobodyne
+Probodobodyne Inc
+Probodyne, Inc
+Reaction Systems Ltd
+Reaction Systems Ltd
+REPOSoftTech
+Rockomax Conglomerate
+Rokea Inc
+SCAN: Scientific Committee on Advanced Navigation
+Sean's Cannery
+Sewer-Pipes Inc.
+Spacecraft Parts Co
+Spaceship Parts Co.
+STEADLER Engineering Corps
+StrutCo
+Surface Structures
+Tarsier Space Technology
+The Solar system
+Umbra Space Industries
+Umbra Space Industries
+Unlimited Riveting, Ltd.
+USI - Freight Division
+Vac-Co Advanced Suction Systems
+WinterOwl Aircraft Emporium
+Zaltonic Electronics
+
+
+
+
+
+#MechJeb2
+[MechJeb2]
+MechJeb
+Maneuver Planner
+Translatron
+Warp Helper
+Attitude Adjustment
+Thrust Window
+RCS Balancer
+Rover Autopilot
+Ascent Autopilot
+Landing Autopilot
+Spaceplane Guidance
+Rendezvous Guidance
+Rendezvous Autopilot
+Docking Autopilot
+
+
+
+
+

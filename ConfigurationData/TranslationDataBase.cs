@@ -27,6 +27,11 @@ namespace KspTsTool2.ConfigurationData
         /// </summary>
         private Dictionary<string, Dictionary< DataType, int > > DataOrder = new Dictionary<string, Dictionary< DataType, int > >();
 
+        /// <summary>
+        /// 固有名詞翻訳機能
+        /// </summary>
+        private ProperNoun ProperNoun { get; set; } = null;
+
 
         /// <summary>
         /// インスタンスを生成
@@ -41,6 +46,9 @@ namespace KspTsTool2.ConfigurationData
             {
                 this.TranslatorApi = new MicrosoftTranslatorAPI.TranslatorApi( clientId ,
                                                                                clientSecret );
+                //固有名詞翻訳機能
+                this.ProperNoun = new ProperNoun();
+                this.ProperNoun.LoadProperNounTable();
             }
 
             //DataTypeを列挙
@@ -218,7 +226,11 @@ namespace KspTsTool2.ConfigurationData
                     if ( translateText.JapaneseText.Equals( "" ) && this.TranslatorApi != null )
                     {
                         //自動翻訳
-                        translateText.JapaneseText = this.TranslatorApi.TranslateEnglishToJapanese( translateText.SourceText );
+                        translateText.JapaneseText = this.ProperNoun.ReinstateDummyText(
+                                                                    this.TranslatorApi.TranslateEnglishToJapanese( 
+                                                                            this.ProperNoun.ReplaceDummyText( directoryName,  translateText.SourceText ) 
+                                                                                    )
+                                                                                 );
                         if ( !translateText.JapaneseText.Equals( "" ) )
                         {
                             tgtDB.SetDataValue( tgtRow , DataTable.TranslationDataTable.ColumnNameMemo , "自動翻訳で日本語を取得" );
@@ -274,7 +286,12 @@ namespace KspTsTool2.ConfigurationData
                         if ( translateText.JapaneseText.Equals( "" ) && this.TranslatorApi != null )
                         {
                             //自動翻訳
-                            translateText.JapaneseText = this.TranslatorApi.TranslateEnglishToJapanese( translateText.SourceText );
+                            translateText.JapaneseText = this.ProperNoun.ReinstateDummyText(
+                                                                        this.TranslatorApi.TranslateEnglishToJapanese(
+                                                                                this.ProperNoun.ReplaceDummyText( directoryName, translateText.SourceText )
+                                                                                        )
+                                                                                     );
+
                             if ( !translateText.JapaneseText.Equals( "" ) )
                             {
                                 tgtDB.SetDataValue( newRow , DataTable.TranslationDataTable.ColumnNameMemo , "新規追加：自動翻訳で日本語を取得" );
