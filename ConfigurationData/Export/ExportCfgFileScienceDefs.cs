@@ -37,12 +37,12 @@ namespace KspTsTool2.ConfigurationData.Export
                             if ( directoryName.Equals( VanillaDirectoryName , StringComparison.CurrentCultureIgnoreCase ) )
                             {
                                 //(Vanilla
-                                exportData.AppendLine( String.Format( "@EXPERIMENT_DEFINITION:HAS[#id[{0}]]" , ( ( Text.TextDataScienceDefs ) textData ).ScienceDefsID  ) );
+                                exportData.AppendLine( String.Format( "@EXPERIMENT_DEFINITION:HAS[#id[{0}]]" , textDataScienceDefs.ScienceDefsID  ) );
                             }
                             else
                             {
                                 //MOD
-                                exportData.AppendLine( String.Format( "@EXPERIMENT_DEFINITION:HAS[#id[{0}]]:NEEDS[{1}]:FINAL" , ( ( Text.TextDataScienceDefs ) textData ).ScienceDefsID , directoryName ) );
+                                exportData.AppendLine( String.Format( "@EXPERIMENT_DEFINITION:HAS[#id[{0}]]:NEEDS[{1}]:FINAL" , textDataScienceDefs.ScienceDefsID , directoryName ) );
                             }
                             exportData.AppendLine( "{" );
                             exportData.AppendLine( "\t//Title" );
@@ -51,23 +51,24 @@ namespace KspTsTool2.ConfigurationData.Export
                             exportData.AppendLine( "\t@RESULTS" );
                             exportData.AppendLine( "\t{" );
 
-                            foreach ( Translate.TranslateText trText in textDataScienceDefs.TranslateTextList )
+                            foreach ( Translate.TranslateText translateText in textDataScienceDefs.TranslateTextList )
                             {
+                                var translateTextScienceDefs = ( Translate.TranslateTextScienceDefs ) translateText;
 
                                 exportData.AppendLine( "\t//English Text" );
-                                exportData.AppendLine( "\t//\t" + String.Format( @"{0},{1} = {2}" , (( Translate.TranslateTextScienceDefs ) trText).Result.ResultText , ( ( Translate.TranslateTextScienceDefs ) trText ).Result.ResultIndex , trText.SourceText ) );
+                                exportData.AppendLine( "\t//\t" + String.Format( @"{0},{1} = {2}" , translateTextScienceDefs.Result.ResultText , translateTextScienceDefs.Result.ResultIndex , translateTextScienceDefs.SourceText ) );
                                 exportData.AppendLine( "\t//Japanese Text" );
-                                if ( trText.JapaneseText.Equals( "" ) || trText.JapaneseText.Equals( trText.SourceText ) )
+                                if ( translateTextScienceDefs.JapaneseText.Equals( "" ) || translateTextScienceDefs.JapaneseText.Equals( translateTextScienceDefs.SourceText ) )
                                 {
-                                    exportData.AppendLine( "\t//\t" + String.Format( @"@{0},{1} = " , ( ( Translate.TranslateTextScienceDefs ) trText ).Result.ResultText , ( ( Translate.TranslateTextScienceDefs ) trText ).Result.ResultIndex ) );
+                                    exportData.AppendLine( "\t//\t" + String.Format( @"@{0},{1} = " , translateTextScienceDefs.Result.ResultText , translateTextScienceDefs.Result.ResultIndex ) );
                                 }
                                 else
                                 {
-                                    if ( !trText.Comment.Equals( "" ) )
+                                    if ( !translateTextScienceDefs.Comment.Equals( "" ) )
                                     {
-                                        exportData.AppendLine( "\t//\t" + trText.Comment );
+                                        exportData.AppendLine( "\t//\t" + translateTextScienceDefs.Comment );
                                     }
-                                    exportData.AppendLine( "\t\t" + String.Format( @"@{0},{1} = {2}" , ( ( Translate.TranslateTextScienceDefs ) trText ).Result.ResultText , ( ( Translate.TranslateTextScienceDefs ) trText ).Result.ResultIndex , trText.JapaneseText ) );
+                                    exportData.AppendLine( "\t\t" + String.Format( @"@{0},{1} = {2}" , translateTextScienceDefs.Result.ResultText , translateTextScienceDefs.Result.ResultIndex , translateTextScienceDefs.JapaneseText ) );
                                 }
                                 exportData.AppendLine( "" );
 

@@ -80,6 +80,9 @@
     <Compile Include="ConfigurationData\DataTable\TranslationDataTableScienceDefs.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="ConfigurationData\DataTable\TranslationDataTableStoryDefs.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="ConfigurationData\DataTable\TranslationDataTableTechTree.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -87,19 +90,23 @@
     <Compile Include="ConfigurationData\Export\ExportCfgFile.cs" />
     <Compile Include="ConfigurationData\Export\ExportCfgFileParts.cs" />
     <Compile Include="ConfigurationData\Export\ExportCfgFileScienceDefs.cs" />
+    <Compile Include="ConfigurationData\Export\ExportCfgFileStoryDefs.cs" />
     <Compile Include="ConfigurationData\Export\ExportCfgFileTechTree.cs" />
     <Compile Include="ConfigurationData\NodeInfo\NodeAnalysis.cs" />
     <Compile Include="ConfigurationData\NodeInfo\NodeAnalysisParts.cs" />
     <Compile Include="ConfigurationData\NodeInfo\NodeAnalysisScienceDefs.cs" />
+    <Compile Include="ConfigurationData\NodeInfo\NodeAnalysisStoryDefs.cs" />
     <Compile Include="ConfigurationData\NodeInfo\NodeAnalysisTechTree.cs" />
     <Compile Include="ConfigurationData\ProperNoun.cs" />
     <Compile Include="ConfigurationData\Text\TextData.cs" />
     <Compile Include="ConfigurationData\Text\TextDataParts.cs" />
     <Compile Include="ConfigurationData\Text\TextDataScienceDefs.cs" />
+    <Compile Include="ConfigurationData\Text\TextDataStoryDefs.cs" />
     <Compile Include="ConfigurationData\Text\TextDataTechTree.cs" />
     <Compile Include="ConfigurationData\Translate\TranslateText.cs" />
     <Compile Include="ConfigurationData\Translate\TranslateTextParts.cs" />
     <Compile Include="ConfigurationData\Translate\TranslateTextScienceDefs.cs" />
+    <Compile Include="ConfigurationData\Translate\TranslateTextStoryDefs.cs" />
     <Compile Include="ConfigurationData\Translate\TranslateTextTechTree.cs" />
     <Compile Include="ConfigurationData\TranslationDataBase.cs" />
     <Compile Include="ConfigurationData\TranslationDataBaseImportFile.cs" />

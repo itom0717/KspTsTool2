@@ -48,9 +48,9 @@ namespace KspTsTool2.ConfigurationData.NodeInfo
         private Regex RegexResultImport = new Regex(@"^@RESULTS($|\s)", RegexOptions.IgnoreCase);
 
         /// <summary>
-        ///  key＆text用正規表現
+        ///  key＆text用正規表現(インポート用)
         /// </summary>
-        private Regex RegexResultTextImport = new Regex(@"^([^=,]+),(\d+)\s*=\s*(.+)", RegexOptions.IgnoreCase);
+        private Regex RegexResultTextImport = new Regex(@"^@([^=,]+),(\d+)\s*=\s*(.+)", RegexOptions.IgnoreCase);
 
 
         /// <summary>

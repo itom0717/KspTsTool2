@@ -53,6 +53,11 @@ namespace KspTsTool2.ConfigurationData
 
 
         /// <summary>
+        /// ReplaceTable MaxID
+        /// </summary>
+        private int ReplaceTableListMaxID = 0;
+
+        /// <summary>
         /// 置換テーブルファイル名
         /// </summary>
         private const string ProperNounTableFileName = "ProperNounTable.txt";
@@ -92,7 +97,7 @@ namespace KspTsTool2.ConfigurationData
             System.Text.RegularExpressions.MatchCollection mc;
 
             string nowDirectoryName = "";
-            int id = 0;
+            this.ReplaceTableListMaxID = 0;
 
             //ファイルの解析
             using ( var sr = new System.IO.StreamReader( fileName, System.Text.Encoding.UTF8 ) )
@@ -129,7 +134,7 @@ namespace KspTsTool2.ConfigurationData
                     {
                         var replaceTable = new ReplaceTable();
 
-                        replaceTable.ID = id++;
+                        replaceTable.ID = this.ReplaceTableListMaxID++;
                         replaceTable.DirectoryName = nowDirectoryName;
                         replaceTable.OriginalText = mc[0].Groups[1].Value;
                         replaceTable.ReplaceText = mc[0].Groups[2].Value;
@@ -144,7 +149,7 @@ namespace KspTsTool2.ConfigurationData
                     {
                         var replaceTable = new ReplaceTable();
 
-                        replaceTable.ID = id++;
+                        replaceTable.ID = this.ReplaceTableListMaxID++;
                         replaceTable.DirectoryName = nowDirectoryName;
                         replaceTable.OriginalText = mc[0].Groups[1].Value;
                         replaceTable.ReplaceText = replaceTable.OriginalText;
@@ -164,6 +169,8 @@ namespace KspTsTool2.ConfigurationData
 
         }
 
+
+
         /// <summary>
         /// 文字長い順でソート
         /// </summary>
@@ -181,16 +188,48 @@ namespace KspTsTool2.ConfigurationData
         /// </summary>
         /// <param name="orgText"></param>
         /// <returns></returns>
-        public string ReplaceDummyText(string directoryName, string orgText)
+        public string ReplaceDummyText(string directoryName, string orgText, DataType dataType)
         {
             var replaceText = new  StringBuilder();
             replaceText.Append( orgText );
+
+
+            if ( dataType == DataType.StoryDefs )
+            {
+                //StoryDefsの場合
+                var regexStoryDefs = new Regex( @"(\[.+?\])"  );
+                System.Text.RegularExpressions.MatchCollection mc = regexStoryDefs.Matches( replaceText.ToString() );
+
+                if ( mc.Count >= 1 )
+                {
+                    foreach ( Match item in mc )
+                    {
+                        var replaceTable = new ReplaceTable();
+
+                        replaceTable.ID = this.ReplaceTableListMaxID++;
+                        replaceTable.DirectoryName = directoryName;
+                        replaceTable.OriginalText = item.Groups[1].Value;
+                        replaceTable.ReplaceText = replaceTable.OriginalText;
+
+                        this.ReplaceTableList.Add( replaceTable );
+                    }
+
+
+                    //文字の長い順でソートする
+                    this.ReplaceTableList.Sort( CompareByTextLength );
+                }
+            }
+
+
+
+
+
 
             foreach ( var replaceTable in this.ReplaceTableList )
             {
                 if ( replaceTable.DirectoryName == "" || replaceTable.DirectoryName == directoryName )
                 {
-                    var regexReplace = new Regex( @"(^|\s*|"")" + "(" + replaceTable.OriginalText + ")" + @"($|\s|""|,|\.|\?|\!)"  );
+                    var regexReplace = new Regex( @"(^|\s*|"")" + "(" + this.escapeText(replaceTable.OriginalText) + ")" + @"($|\s|""|,|\.|\?|\!)"  );
                     System.Text.RegularExpressions.MatchCollection mc = regexReplace.Matches( replaceText.ToString() );
                     if ( mc.Count >= 1 )
                     {
@@ -232,6 +271,39 @@ namespace KspTsTool2.ConfigurationData
         }
 
 
+        /// <summary>
+        /// テキスト内の正規表現文字をエスケープ
+        /// </summary>
+        /// <param name="srcText"></param>
+        /// <returns></returns>
+        private string escapeText(string srcText)
+        {
+            string dstText = srcText;
+
+            string[] charList = {@"\",
+                                 @"*",
+                                 @"+",
+                                 @"?",
+                                 @"{",
+                                 @"}",
+                                 @"(",
+                                 @")",
+                                 @"[",
+                                 @"]",
+                                 @"^",
+                                 @"$",
+                                 @"-",
+                                 @"|",
+                                 @"/" };
+
+            foreach ( string c in charList )
+            {
+                dstText = dstText.Replace( c , @"\" + c );
+            }
+
+
+            return dstText;
+        }
 
 
 

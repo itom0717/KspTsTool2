@@ -120,10 +120,10 @@ namespace KspTsTool2.ConfigurationData
         /// 英語から日本語へ翻訳
         /// </summary>
         /// <param name="TranslateText"></param>
-        public void Translate( string directoryName,
-                               string cfgFilename,
-                               Text.TextData           textData ,
-                               Translate.TranslateText translateText)
+        public void Translate( string directoryName ,
+                               string cfgFilename ,
+                               Text.TextData textData ,
+                               Translate.TranslateText translateText )
         {
 
             if ( directoryName.Equals( "" )
@@ -184,7 +184,7 @@ namespace KspTsTool2.ConfigurationData
                         //英語テキスト変更のため再翻訳
                         //翻訳済みテキストと同じデータがあればそれを使用する
                         sameTextRow = tgtDB.SearchSameText( translateText.SourceText );
-                        if( sameTextRow != null)
+                        if ( sameTextRow != null )
                         {
                             translateText.JapaneseText = ( string ) sameTextRow[DataTable.TranslationDataTable.ColumnNameJapaneseText];
 
@@ -227,8 +227,8 @@ namespace KspTsTool2.ConfigurationData
                     {
                         //自動翻訳
                         translateText.JapaneseText = this.ProperNoun.ReinstateDummyText(
-                                                                    this.TranslatorApi.TranslateEnglishToJapanese( 
-                                                                            this.ProperNoun.ReplaceDummyText( directoryName,  translateText.SourceText ) 
+                                                                    this.TranslatorApi.TranslateEnglishToJapanese(
+                                                                            this.ProperNoun.ReplaceDummyText( directoryName , translateText.SourceText , textData.DataType )
                                                                                     )
                                                                                  );
                         if ( !translateText.JapaneseText.Equals( "" ) )
@@ -245,7 +245,7 @@ namespace KspTsTool2.ConfigurationData
                     tgtDB.SetTitleData( tgtRow , textData , translateText );
 
 
-                    if( tgtRow .RowState != DataRowState.Unchanged )
+                    if ( tgtRow.RowState != DataRowState.Unchanged )
                     {
                         //変更された
                         // 更新日
@@ -288,7 +288,7 @@ namespace KspTsTool2.ConfigurationData
                             //自動翻訳
                             translateText.JapaneseText = this.ProperNoun.ReinstateDummyText(
                                                                         this.TranslatorApi.TranslateEnglishToJapanese(
-                                                                                this.ProperNoun.ReplaceDummyText( directoryName, translateText.SourceText )
+                                                                                this.ProperNoun.ReplaceDummyText( directoryName , translateText.SourceText , textData.DataType )
                                                                                         )
                                                                                      );
 

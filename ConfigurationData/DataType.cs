@@ -25,6 +25,11 @@
         /// </summary>
         TechTree,
 
+        /// <summary>
+        /// StoryDefs
+        /// </summary>
+        StoryDefs,
+
 
     }
 

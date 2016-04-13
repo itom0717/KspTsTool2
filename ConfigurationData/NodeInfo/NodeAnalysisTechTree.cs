@@ -37,12 +37,12 @@ namespace KspTsTool2.ConfigurationData.NodeInfo
         /// <summary>
         /// description用正規表現
         /// </summary>
-        private Regex RegexrDescription  = new Regex(@"^[@]*description\s*=\s*(.+)$", RegexOptions.IgnoreCase);
+        private Regex RegexDescription  = new Regex(@"^[@]*description\s*=\s*(.+)$", RegexOptions.IgnoreCase);
 
         /// <summary>
         /// description用正規表現
         /// </summary>
-        private Regex RegexrDescriptionImport  = new Regex(@"^@description\s*=\s*(.+)$", RegexOptions.IgnoreCase);
+        private Regex RegexDescriptionImport  = new Regex(@"^@description\s*=\s*(.+)$", RegexOptions.IgnoreCase);
 
 
 
@@ -221,7 +221,7 @@ namespace KspTsTool2.ConfigurationData.NodeInfo
                 }
 
                 //説明
-                mc = this.RegexrDescription.Matches( blockText );
+                mc = this.RegexDescription.Matches( blockText );
                 if ( mc.Count >= 1 )
                 {
                     this.TechTreeDescription = mc[0].Groups[1].Value;
@@ -322,7 +322,7 @@ namespace KspTsTool2.ConfigurationData.NodeInfo
             if ( this.InsideNodeRDNode && nestLevel == 2 )
             {
                 //説明
-                mc = this.RegexrDescriptionImport.Matches( blockText );
+                mc = this.RegexDescriptionImport.Matches( blockText );
                 if ( mc.Count >= 1 )
                 {
                     this.TechTreeDescription = mc[0].Groups[1].Value;
