@@ -22,7 +22,10 @@ namespace KspTsTool2.Forms
         /// </summary>
         private string ImportTranslationFilePath { get; set; } = "";
 
-
+        /// <summary>
+        /// 設定データ
+        /// </summary>
+        private SettingsParameters SettingsParameters { get; set; } = null;
 
         /// <summary>
         /// コンストラクタ
@@ -40,13 +43,9 @@ namespace KspTsTool2.Forms
         private void MainForm_Load( object sender, EventArgs e )
         {
 
-            ///旧バージョンの設定値を引き継ぐ
-            if ( Properties.Settings.Default.UpdateRequired )
-            {
-                Properties.Settings.Default.Upgrade();
-                Properties.Settings.Default.UpdateRequired = false;
-                Properties.Settings.Default.Save();
-            }
+            //設定データ
+            this.SettingsParameters = new SettingsParameters();
+  
 
             //バージョン取得
             System.Diagnostics.FileVersionInfo fvInfo = System.Diagnostics.FileVersionInfo.GetVersionInfo(
@@ -73,25 +72,24 @@ namespace KspTsTool2.Forms
 
 
             //処理後にフォルダを開く
-            this.IsAfterOpenFolderCheckBox.Checked = Properties.Settings.Default.IsAfterOpenFolder;
+            this.IsAfterOpenFolderCheckBox.Checked = this.SettingsParameters.IsAfterOpenFolder;
 
             //初期値（前回の値)を設定
             //保存フォルダ名
-            this.SaveFolderNameTextBox.Text = this.ConfirmationSaveFolderName( Properties.Settings.Default.SaveFolderName );
+            this.SaveFolderNameTextBox.Text = this.ConfirmationSaveFolderName( this.SettingsParameters.SaveFolderName );
 
             //コンボボックスへセットする
-            string[] paths = Properties.Settings.Default.GameDataPathList.Split('\t');
-            foreach ( string path in paths )
+            foreach ( string path in this.SettingsParameters.GameDataPathList )
             {
                 if ( !path.Equals( "" ) )
                 {
                     this.TargetFolderComboBox.Items.Add( path );
                 }
             }
-            if ( this.TargetFolderComboBox.Items.Count > Properties.Settings.Default.LastSelectedGameDataPathIndex
-                && Properties.Settings.Default.LastSelectedGameDataPathIndex >= 0 )
+            if ( this.TargetFolderComboBox.Items.Count > this.SettingsParameters.LastSelectedGameDataPathIndex
+                && this.SettingsParameters.LastSelectedGameDataPathIndex >= 0 )
             {
-                this.TargetFolderComboBox.SelectedIndex = Properties.Settings.Default.LastSelectedGameDataPathIndex;
+                this.TargetFolderComboBox.SelectedIndex = this.SettingsParameters.LastSelectedGameDataPathIndex;
             }
             else if ( this.TargetFolderComboBox.Items.Count > 0 )
             {
@@ -102,9 +100,8 @@ namespace KspTsTool2.Forms
                 this.TargetFolderComboBox.SelectedIndex = -1;
             }
 
-
             //ログファイル保存
-            this.IsSaveLogFileCheckBox.Checked = Properties.Settings.Default.IsSaveLogFile;
+            this.IsSaveLogFileCheckBox.Checked = this.SettingsParameters.IsSaveLogFile;
 
             //ボタン類のコントロール有効/無効切り替え
             this.ChangeEnabledControl( true );
@@ -121,33 +118,22 @@ namespace KspTsTool2.Forms
         private void MainForm_FormClosed( object sender, FormClosedEventArgs e )
         {
             //設定値を記憶
-            Properties.Settings.Default.SaveFolderName = this.SaveFolderNameTextBox.Text;
-
-
-            string pathList = "";
+            this.SettingsParameters.SaveFolderName                = this.SaveFolderNameTextBox.Text;
+            var pathList = new List<string>();
             foreach ( string path in this.TargetFolderComboBox.Items )
             {
                 if ( !path.Equals( "" ) )
                 {
-                    if ( !pathList.Equals( "" ) )
-                    {
-                        pathList += '\t';
-                    }
-                    pathList += path;
+                    pathList.Add( path );
                 }
             }
-            Properties.Settings.Default.GameDataPathList = pathList;
-            Properties.Settings.Default.LastSelectedGameDataPathIndex = this.TargetFolderComboBox.SelectedIndex;
-
-            Properties.Settings.Default.IsAfterOpenFolder = this.IsAfterOpenFolderCheckBox.Checked;
-
-
-            //ログファイル保存
-            Properties.Settings.Default.IsSaveLogFile = this.IsSaveLogFileCheckBox.Checked;
-
+            this.SettingsParameters.GameDataPathList              = pathList;
+            this.SettingsParameters.LastSelectedGameDataPathIndex = this.TargetFolderComboBox.SelectedIndex;
+            this.SettingsParameters.IsAfterOpenFolder             = this.IsAfterOpenFolderCheckBox.Checked;
+            this.SettingsParameters.IsSaveLogFile                 = this.IsSaveLogFileCheckBox.Checked;
 
             //設定値保存
-            Properties.Settings.Default.Save();
+            this.SettingsParameters.Save();
         }
 
         /// <summary>
@@ -181,7 +167,7 @@ namespace KspTsTool2.Forms
         /// <param name="e"></param>
         private void SettingButton_Click( object sender, EventArgs e )
         {
-            var form = new Forms.SettingsForm();
+            var form = new Forms.SettingsForm( this.SettingsParameters );
             form.ShowDialog();
         }
 
@@ -461,10 +447,7 @@ namespace KspTsTool2.Forms
             this.IsAfterOpenFolderCheckBox.Enabled = isEnable;
 
             this.ImportFileButton.Enabled = isEnable;
-
-
         }
-
 
         /// <summary>
         /// 中止処理確認＆中止設定
@@ -559,13 +542,6 @@ namespace KspTsTool2.Forms
 
 
 
-
-        /// <summary>
-        /// 設定データ受け渡し用
-        /// </summary>
-        private SettingsParameters SettingsParameters = null;
-
-
         /// <summary>
         /// 処理実行ボタン
         /// </summary>
@@ -575,8 +551,6 @@ namespace KspTsTool2.Forms
         {
             //設定値チェック
 
-            //設定データ受け渡し用
-            this.SettingsParameters = new SettingsParameters();
 
             //設定値取得
             try
@@ -631,28 +605,16 @@ namespace KspTsTool2.Forms
                     }
 
                     // 処理後に処理フォルダを開くか？
-                    this.SettingsParameters.IsAfterOpenFolderCheckBox = this.IsAfterOpenFolderCheckBox.Checked;
-
-
-                    //Microsoft Translator API クライアントID
-                    this.SettingsParameters.MicrosoftTranslatorAPIClientId = Properties.Settings.Default.MicrosoftTranslatorAPIClientId;
-
-                    //Microsoft Translator API 顧客の秘密
-                    this.SettingsParameters.MicrosoftTranslatorAPIClientSecret = Properties.Settings.Default.MicrosoftTranslatorAPIClientSecret;
+                    this.SettingsParameters.IsAfterOpenFolder = this.IsAfterOpenFolderCheckBox.Checked;
 
                     //Microsoft Translator API を使用して日本語へ翻訳を行か？
-                    this.SettingsParameters.IsMachineTranslation = Properties.Settings.Default.IsMachineTranslation;
                     if ( this.SettingsParameters.MicrosoftTranslatorAPIClientId.Equals( "" )
                          || this.SettingsParameters.MicrosoftTranslatorAPIClientSecret.Equals( "" ) )
                     {
                         //Microsoft Translator API クライアントID または　顧客の秘密　が空欄の場合、自動翻訳は行わない
                         this.SettingsParameters.IsMachineTranslation = false;
                     }
-
-
                 }
-
-
 
                 //処理開始を確認
                 if ( MessageBox.Show( "処理を実行しますか？",
@@ -670,7 +632,7 @@ namespace KspTsTool2.Forms
 
 
                 //プログレスバー初期設定
-                this.TranslationProgressBar.Value = 0;
+                this.TranslationProgressBar.Value   = 0;
                 this.TranslationProgressBar.Minimum = 0;
                 this.TranslationProgressBar.Maximum = 100;
 
@@ -999,7 +961,7 @@ namespace KspTsTool2.Forms
             {
                 //処理完了した。
                 //フォルダを開く
-                if ( this.SettingsParameters.IsAfterOpenFolderCheckBox )
+                if ( this.SettingsParameters.IsAfterOpenFolder )
                 {
                     System.Diagnostics.Process.Start( this.SettingsParameters.SavePath );
                 }

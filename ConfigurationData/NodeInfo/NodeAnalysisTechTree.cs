@@ -11,7 +11,7 @@ namespace KspTsTool2.ConfigurationData.NodeInfo
         /// <summary>
         ///  TechTree用正規表現
         /// </summary>
-        private Regex RegexTechTree = new Regex(@"^[@]*TechTree($|\s)", RegexOptions.IgnoreCase);
+        private Regex RegexTechTree = new Regex(@"^[@]*TechTree($|\s|:)", RegexOptions.IgnoreCase);
 
         /// <summary>
         ///  RDNode用正規表現

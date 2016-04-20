@@ -8,12 +8,21 @@ namespace KspTsTool2.Forms
     /// </summary>
     public partial class SettingsForm : Form
     {
+
+        /// <summary>
+        /// 設定データ
+        /// </summary>
+        private SettingsParameters SettingsParameters { get; set; } = null;
+
+
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        public SettingsForm()
+        public SettingsForm( SettingsParameters settingsParameters )
         {
             InitializeComponent();
+
+            this.SettingsParameters = settingsParameters;
         }
 
         /// <summary>
@@ -24,9 +33,9 @@ namespace KspTsTool2.Forms
         private void SettingsForm_Load( object sender , EventArgs e )
         {
             //現在の値をコントロールに設定
-            this.IsMachineTranslationCheckBox.Checked = Properties.Settings.Default.IsMachineTranslation;
-            this.ClientIdTextBox.Text = Properties.Settings.Default.MicrosoftTranslatorAPIClientId;
-            this.ClientSecretTextBox.Text = Properties.Settings.Default.MicrosoftTranslatorAPIClientSecret;
+            this.IsMachineTranslationCheckBox.Checked = this.SettingsParameters.IsMachineTranslation;
+            this.ClientIdTextBox.Text                 = this.SettingsParameters.MicrosoftTranslatorAPIClientId;
+            this.ClientSecretTextBox.Text             = this.SettingsParameters.MicrosoftTranslatorAPIClientSecret;
 
             //テキストボックスの有効無効切り替え
             this.ChangeEnabledControl( this.IsMachineTranslationCheckBox.Checked );
@@ -66,12 +75,9 @@ namespace KspTsTool2.Forms
             }
 
             //設定を記憶
-            Properties.Settings.Default.IsMachineTranslation = this.IsMachineTranslationCheckBox.Checked;
-            Properties.Settings.Default.MicrosoftTranslatorAPIClientId = this.ClientIdTextBox.Text.Trim();
-            Properties.Settings.Default.MicrosoftTranslatorAPIClientSecret = this.ClientSecretTextBox.Text.Trim();
-
-            //設定値保存
-            Properties.Settings.Default.Save();
+            this.SettingsParameters.IsMachineTranslation               = this.IsMachineTranslationCheckBox.Checked;
+            this.SettingsParameters.MicrosoftTranslatorAPIClientId     = this.ClientIdTextBox.Text.Trim();
+            this.SettingsParameters.MicrosoftTranslatorAPIClientSecret = this.ClientSecretTextBox.Text.Trim();
 
             //フォーム閉じる
             this.Close();
@@ -96,7 +102,7 @@ namespace KspTsTool2.Forms
         /// </summary>
         private void ChangeEnabledControl( bool isEnable )
         {
-            this.ClientIdTextBox.Enabled = isEnable;
+            this.ClientIdTextBox.Enabled     = isEnable;
             this.ClientSecretTextBox.Enabled = isEnable;
         }
 
