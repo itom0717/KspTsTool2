@@ -4,25 +4,20 @@
 namespace KspTsTool2.ConfigurationData.NodeInfo
 {
     /// <summary>
-    /// PartData解析
+    /// Strategies解析
     /// </summary>
-    public class NodeAnalysisParts : NodeAnalysis
+    public class NodeAnalysisStrategies : NodeAnalysis
     {
         /// <summary>
-        /// Part用正規表現
+        /// Strategies用正規表現
         /// </summary>
-        private Regex RegexPart = new Regex(@"^PART($|\s)", RegexOptions.IgnoreCase);
-
-        /// <summary>
-        /// Part用正規表現(ModulManagerで追加したパーツ)
-        /// </summary>
-        private Regex RegexPartAddPart = new Regex(@"^\+PART\[", RegexOptions.IgnoreCase);
+        private Regex RegexStrategies = new Regex(@"^STRATEGY($|\s|:)", RegexOptions.IgnoreCase);
 
 
         /// <summary>
         /// Name用正規表現
         /// </summary>
-        private Regex RegexName = new Regex(@"^[@]*Name\s*=\s*(.+)$", RegexOptions.IgnoreCase);
+        private Regex RegexName = new Regex(@"^[@]*name\s*=\s*(.+)$", RegexOptions.IgnoreCase);
 
         /// <summary>
         /// title用正規表現
@@ -32,18 +27,18 @@ namespace KspTsTool2.ConfigurationData.NodeInfo
         /// <summary>
         /// description用正規表現
         /// </summary>
-        private Regex RegexrDescription  = new Regex(@"^[@]*description\s*=\s*(.+)$", RegexOptions.IgnoreCase);
+        private Regex RegexrDescription  = new Regex(@"^[@]*desc\s*=\s*(.+)$", RegexOptions.IgnoreCase);
 
 
         /// <summary>
-        /// Part用正規表現（インポート用）
+        /// Strategies用正規表現（インポート用）
         /// </summary>
-        private Regex RegexPartImport  = new Regex(@"^@PART\s*\[([^\}]+)\]", RegexOptions.IgnoreCase);
+        private Regex RegexStrategiesImport = new Regex(@"^@STRATEGY\s*:\s*HAS\[\s*#name\[\s*(.[^\}]+)\s*\]\s*\]($|\s|:)", RegexOptions.IgnoreCase);
 
         /// <summary>
         /// description用正規表現（インポート用）
         /// </summary>
-        private Regex RegexrDescriptionImport  = new Regex(@"@description\s*=\s*(.+)", RegexOptions.IgnoreCase);
+        private Regex RegexrDescriptionImport  = new Regex(@"@desc\s*=\s*(.+)", RegexOptions.IgnoreCase);
 
 
 
@@ -60,25 +55,25 @@ namespace KspTsTool2.ConfigurationData.NodeInfo
         private bool InsideNode { get; set; } = false;
 
         /// <summary>
-        /// パーツ名
+        /// Name
         /// </summary>
-        private string PartName { get; set; }
+        private string StrategiesName { get; set; }
 
         /// <summary>
-        /// パーツタイトル
+        /// タイトル
         /// </summary> 
-        private string PartTitle { get; set; }
+        private string StrategiesTitle { get; set; }
 
         /// <summary>
-        /// パーツ説明
+        /// 説明
         /// </summary>
-        private string PartDescription { get; set; }
+        private string StrategiesDescription { get; set; }
 
 
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        public NodeAnalysisParts()
+        public NodeAnalysisStrategies()
         {
             this.FindNode = false;
             this.InsideNode = false;
@@ -97,15 +92,15 @@ namespace KspTsTool2.ConfigurationData.NodeInfo
 
             //ノードが見つかったか？
             if ( !this.InsideNode && nestLevel == 0
-                && ( this.RegexPart.IsMatch( blockText ) || this.RegexPartAddPart.IsMatch( blockText ) ) )
+                && ( this.RegexStrategies.IsMatch( blockText ) ) )
             {
                 //ノードが見つかった
                 this.FindNode = true;
                 this.InsideNode = false;
 
-                this.PartName = "";
-                this.PartTitle = "";
-                this.PartDescription = "";
+                this.StrategiesName = "";
+                this.StrategiesTitle = "";
+                this.StrategiesDescription = "";
 
                 return;
             }
@@ -126,12 +121,12 @@ namespace KspTsTool2.ConfigurationData.NodeInfo
                 this.InsideNode = false;
 
                 //翻訳元テキストデータを記憶する
-                if ( !this.PartName.Equals( "" ) )
+                if ( !this.StrategiesName.Equals( "" ) )
                 {
                     this.TextDataList.Add(
-                            new Text.TextDataParts( this.PartName ,
-                                          this.PartTitle ,
-                                          this.PartDescription )
+                            new Text.TextDataStrategies( this.StrategiesName ,
+                                          this.StrategiesTitle ,
+                                          this.StrategiesDescription )
                                           );
                 }
             }
@@ -145,21 +140,21 @@ namespace KspTsTool2.ConfigurationData.NodeInfo
                 mc = this.RegexName.Matches( blockText );
                 if ( mc.Count >= 1 )
                 {
-                    this.PartName = mc[0].Groups[1].Value;
+                    this.StrategiesName = mc[0].Groups[1].Value;
                 }
 
                 //パーツタイトル
                 mc = this.RegexTitle.Matches( blockText );
                 if ( mc.Count >= 1 )
                 {
-                    this.PartTitle = mc[0].Groups[1].Value;
+                    this.StrategiesTitle = mc[0].Groups[1].Value;
                 }
 
                 //パーツ説明
                 mc = this.RegexrDescription.Matches( blockText );
                 if ( mc.Count >= 1 )
                 {
-                    this.PartDescription = mc[0].Groups[1].Value;
+                    this.StrategiesDescription = mc[0].Groups[1].Value;
                 }
             }
 
@@ -180,18 +175,18 @@ namespace KspTsTool2.ConfigurationData.NodeInfo
             System.Text.RegularExpressions.MatchCollection mc;
 
             //ノードが見つかったか？
-            mc = this.RegexPartImport.Matches( blockText );
+            mc = this.RegexStrategiesImport.Matches( blockText );
             if ( !this.InsideNode && nestLevel == 0 && mc.Count >= 1 )
             {
                 //ノードが見つかった
                 this.FindNode = true;
                 this.InsideNode = false;
 
-                this.PartName = mc[0].Groups[1].Value;
-                this.PartDescription = "";
+                this.StrategiesName = mc[0].Groups[1].Value;
+                this.StrategiesDescription = "";
 
                 //スペースが含まれている場合は、？に変換されているので、?をスペースへ変換
-                this.PartName = this.PartName.Replace( "?" , " " );
+                this.StrategiesName = this.StrategiesName.Replace( "?" , " " );
 
                 return;
             }
@@ -211,12 +206,12 @@ namespace KspTsTool2.ConfigurationData.NodeInfo
                 this.InsideNode = false;
 
                 //翻訳元テキストデータを記憶する
-                if ( !this.PartName.Equals( "" ) )
+                if ( !this.StrategiesName.Equals( "" ) )
                 {
                     this.TextDataList.Add(
-                        new Text.TextDataParts( this.PartName ,
+                        new Text.TextDataStrategies( this.StrategiesName ,
                                                 "" ,
-                                                this.PartDescription )
+                                                this.StrategiesDescription )
                                           );
                 }
             }
@@ -230,7 +225,7 @@ namespace KspTsTool2.ConfigurationData.NodeInfo
                 mc = this.RegexrDescriptionImport.Matches( blockText );
                 if ( mc.Count >= 1 )
                 {
-                    this.PartDescription = mc[0].Groups[1].Value;
+                    this.StrategiesDescription = mc[0].Groups[1].Value;
                 }
             }
         }

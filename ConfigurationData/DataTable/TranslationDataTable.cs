@@ -21,7 +21,6 @@ namespace KspTsTool2.ConfigurationData.DataTable
 
 
 
-
         /// <summary>
         /// フォルダ名
         /// </summary>

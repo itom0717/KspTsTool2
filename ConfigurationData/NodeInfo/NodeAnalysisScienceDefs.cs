@@ -163,7 +163,7 @@ namespace KspTsTool2.ConfigurationData.NodeInfo
                 if ( !this.ScienceDefsID.Equals( "" ) )
                 {
                     this.TextDataList.Add(
-                        new Text.TextDataScienceDefs(   this.ScienceDefsID ,
+                        new Text.TextDataScienceDefs( this.ScienceDefsID ,
                                                         this.ScienceDefsTitle ,
                                                         this.ScienceDefsResultText )
                                          );

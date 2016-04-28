@@ -56,7 +56,7 @@
             statusText.IsReset = true;
 
             //ステータス表示
-            this.BackgroundWorker.ReportProgress( (int)this.NowPercent , statusText );
+            this.BackgroundWorker.ReportProgress( ( int ) this.NowPercent , statusText );
         }
 
 
@@ -86,7 +86,7 @@
                 //計算で求める
                 double returnValue = 0.0;
 
-                if ( this.FirstLevelDirectoryMaxCount <= 0 || this.FirstLevelDirectoryNowCount  <= 0)
+                if ( this.FirstLevelDirectoryMaxCount <= 0 || this.FirstLevelDirectoryNowCount <= 0 )
                 {
                     return returnValue;
                 }

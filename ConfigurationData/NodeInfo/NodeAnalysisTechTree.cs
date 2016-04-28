@@ -166,7 +166,7 @@ namespace KspTsTool2.ConfigurationData.NodeInfo
                         this.TechTreeTitle = "";
                         this.TechTreeDescription = "";
                     }
-                    else  if ( this.RegexRDNode.IsMatch( blockText ) )
+                    else if ( this.RegexRDNode.IsMatch( blockText ) )
                     {
                         //RDNodeノードが見つかった
                         this.FindNodeRDNode = true;
@@ -193,7 +193,7 @@ namespace KspTsTool2.ConfigurationData.NodeInfo
                 this.InsideNodeRDNode = false;
 
                 //翻訳元テキストデータを記憶する
-                if ( !this.TechTreeID.Equals( "" )  && !this.TechTreeDescription.Equals( "" ) )
+                if ( !this.TechTreeID.Equals( "" ) && !this.TechTreeDescription.Equals( "" ) )
                 {
                     this.TextDataList.Add(
                             new Text.TextDataTechTree( this.TechTreeID ,

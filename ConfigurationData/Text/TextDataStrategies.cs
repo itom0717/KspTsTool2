@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 namespace KspTsTool2.ConfigurationData.Text
 {
     /// <summary>
-    /// パーツ用テキストデータ
+    /// Strategies用テキストデータ
     /// </summary>
-    public class TextDataParts : TextData
+    public class TextDataStrategies : TextData
     {
         /// <summary>
-        /// 名称
+        /// Name
         /// </summary>
         public string Name { get; private set; } = "";
 
@@ -25,14 +25,14 @@ namespace KspTsTool2.ConfigurationData.Text
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        public TextDataParts( string name ,
+        public TextDataStrategies( string name ,
                        string title ,
                        string description )
         {
-            this.DataType = DataType.Parts;
+            this.DataType = DataType.Strategies;
             this.Name = name;
             this.Title = title;
-            this.TranslateTextList.Add( new Translate.TranslateTextParts( description ) );
+            this.TranslateTextList.Add( new Translate.TranslateTextStrategies( description ) );
         }
     }
 }

@@ -14,12 +14,12 @@ namespace KspTsTool2.ConfigurationData.Text
         /// <summary>
         /// サイエンスレポートID
         /// </summary>
-        public string ScienceDefsID { get; private set; } = "";
+        public string ID { get; private set; } = "";
 
         /// <summary>
         /// サイエンスレポートタイトル
         /// </summary>
-        public string ScienceDefsTitle { get; private set; } = "";
+        public string Title { get; private set; } = "";
 
 
         /// <summary>
@@ -30,8 +30,8 @@ namespace KspTsTool2.ConfigurationData.Text
                                     List<Translate.TranslateText> resultText )
         {
             this.DataType = DataType.ScienceDefs;
-            this.ScienceDefsID = id;
-            this.ScienceDefsTitle = title;
+            this.ID = id;
+            this.Title = title;
             this.TranslateTextList = resultText;
         }
 

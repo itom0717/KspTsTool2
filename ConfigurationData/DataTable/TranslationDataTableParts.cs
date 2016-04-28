@@ -14,12 +14,12 @@ namespace KspTsTool2.ConfigurationData.DataTable
         /// <summary>
         /// パーツ名
         /// </summary>
-        private static string ColumnNamePartName  = @"Name";
+        private static string ColumnNameName  = @"Name";
 
         /// <summary>
         /// パーツタイトル
         /// </summary>
-        private static string ColumnNamePartTitle  = @"Title";
+        private static string ColumnNameTitle  = @"Title";
 
 
 
@@ -30,14 +30,14 @@ namespace KspTsTool2.ConfigurationData.DataTable
         {
             // パーツ名
             {
-                var column = this.Columns.Add( ColumnNamePartName , typeof( System.String ) );
+                var column = this.Columns.Add( ColumnNameName , typeof( System.String ) );
                 column.DefaultValue = "";
                 column.AllowDBNull = false;
                 column.SetOrdinal( SetOrdinalCount++ );
             }
             // パーツタイトル
             {
-                var column = this.Columns.Add( ColumnNamePartTitle , typeof( System.String ) );
+                var column = this.Columns.Add( ColumnNameTitle , typeof( System.String ) );
                 column.DefaultValue = "";
                 column.AllowDBNull = false;
                 column.SetOrdinal( SetOrdinalCount++ );
@@ -52,7 +52,7 @@ namespace KspTsTool2.ConfigurationData.DataTable
                                                    Text.TextData textData ,
                                                    Translate.TranslateText translateText )
         {
-            Text.TextDataParts textDataParts = ( Text.TextDataParts ) textData;
+            Text.TextDataParts tData = ( Text.TextDataParts ) textData;
 
             var where = new System.Text.StringBuilder();
             where.Clear();
@@ -67,8 +67,8 @@ namespace KspTsTool2.ConfigurationData.DataTable
             }
 
             where.Append( String.Format( "{0}='{1}'" ,
-                                         ColumnNamePartName ,
-                                         this.DoubleSiglQrt( textDataParts.PartName ) ) );
+                                         ColumnNameName ,
+                                         this.DoubleSiglQrt( tData.Name ) ) );
 
 
             return this.Select( where.ToString() );
@@ -78,21 +78,21 @@ namespace KspTsTool2.ConfigurationData.DataTable
         /// <summary>
         /// タイトル等データをセット
         /// </summary>
-        public override void SetTitleData( DataRow row,
+        public override void SetTitleData( DataRow row ,
                                       Text.TextData textData ,
                                       Translate.TranslateText translateText )
         {
-            Text.TextDataParts textDataParts = ( Text.TextDataParts ) textData;
+            Text.TextDataParts tData = ( Text.TextDataParts ) textData;
 
             if ( row.RowState == DataRowState.Added || row.RowState == DataRowState.Detached )
             {
                 // パーツ名
-                this.SetDataValue( row , ColumnNamePartName , textDataParts.PartName );
+                this.SetDataValue( row , ColumnNameName , tData.Name );
             }
 
 
             // パーツタイトル
-            this.SetDataValue( row , ColumnNamePartTitle , textDataParts.PartTitle );
+            this.SetDataValue( row , ColumnNameTitle , tData.Title );
 
         }
 

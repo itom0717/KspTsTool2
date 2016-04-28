@@ -30,6 +30,16 @@
         /// </summary>
         StoryDefs,
 
+        /// <summary>
+        /// Departments
+        /// </summary>
+        Departments,
+
+        /// <summary>
+        /// Strategies
+        /// </summary>
+        Strategies,
+
 
     }
 

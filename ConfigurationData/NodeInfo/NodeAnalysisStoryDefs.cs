@@ -130,7 +130,7 @@ namespace KspTsTool2.ConfigurationData.NodeInfo
                 return;
             }
 
-            if (!this.InsideNodeStoryDef)
+            if ( !this.InsideNodeStoryDef )
             {
                 //StoryDefノードの外
                 return;
@@ -166,7 +166,7 @@ namespace KspTsTool2.ConfigurationData.NodeInfo
                 //記述ノードの中に入った
                 this.InsideNodeTextNode = true;
             }
-            if( !this.InsideNodeTextNode )
+            if ( !this.InsideNodeTextNode )
             {
                 //記述ノードの外
                 return;
@@ -179,7 +179,7 @@ namespace KspTsTool2.ConfigurationData.NodeInfo
                 this.InsideNodeTextNode = false;
 
                 //翻訳元テキストデータを記憶する
-                if ( !this.StoryDefTextNode.Equals( "" ) && this.StoryDefTextNodeText.Count>0 )
+                if ( !this.StoryDefTextNode.Equals( "" ) && this.StoryDefTextNodeText.Count > 0 )
                 {
                     this.TextDataList.Add(
                             new Text.TextDataStoryDefs( this.StoryDefTextNode ,
@@ -216,7 +216,7 @@ namespace KspTsTool2.ConfigurationData.NodeInfo
                                                                                          text ) );
                 }
 
-                
+
             }
 
         }
@@ -265,7 +265,7 @@ namespace KspTsTool2.ConfigurationData.NodeInfo
                 return;
             }
 
-            if (!this.InsideNodeStoryDef)
+            if ( !this.InsideNodeStoryDef )
             {
                 //StoryDefノードの外
                 return;
@@ -301,7 +301,7 @@ namespace KspTsTool2.ConfigurationData.NodeInfo
                 //記述ノードの中に入った
                 this.InsideNodeTextNode = true;
             }
-            if( !this.InsideNodeTextNode )
+            if ( !this.InsideNodeTextNode )
             {
                 //記述ノードの外
                 return;
@@ -314,7 +314,7 @@ namespace KspTsTool2.ConfigurationData.NodeInfo
                 this.InsideNodeTextNode = false;
 
                 //翻訳元テキストデータを記憶する
-                if ( !this.StoryDefTextNode.Equals( "" ) && this.StoryDefTextNodeText.Count>0 )
+                if ( !this.StoryDefTextNode.Equals( "" ) && this.StoryDefTextNodeText.Count > 0 )
                 {
                     this.TextDataList.Add(
                             new Text.TextDataStoryDefs( this.StoryDefTextNode ,

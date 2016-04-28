@@ -1,39 +1,41 @@
 ﻿using System;
 using System.Data;
 
+
 namespace KspTsTool2.ConfigurationData.DataTable
 {
     /// <summary>
-    /// 翻訳データベース処理(TechTree)
+    /// 翻訳データベース処理(Strategies)
     /// </summary>
-    public class TranslationDataTableTechTree : TranslationDataTable
+    public class TranslationDataTableStrategies : TranslationDataTable
     {
 
-        /// <summary>
-        /// ID
-        /// </summary>
-        private  static string ColumnNameID  = @"ID";
 
         /// <summary>
-        /// タイトル
+        /// name
+        /// </summary>
+        private static string ColumnNameName  = @"Name";
+
+        /// <summary>
+        /// title
         /// </summary>
         private static string ColumnNameTitle  = @"Title";
+
 
 
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        public TranslationDataTableTechTree() : base( DataType.TechTree )
+        public TranslationDataTableStrategies() : base( DataType.Strategies )
         {
-
-            // ID
+            // name
             {
-                var column = this.Columns.Add( ColumnNameID , typeof( System.String ) );
+                var column = this.Columns.Add( ColumnNameName , typeof( System.String ) );
                 column.DefaultValue = "";
                 column.AllowDBNull = false;
                 column.SetOrdinal( SetOrdinalCount++ );
             }
-            // タイトル
+            // title
             {
                 var column = this.Columns.Add( ColumnNameTitle , typeof( System.String ) );
                 column.DefaultValue = "";
@@ -42,14 +44,15 @@ namespace KspTsTool2.ConfigurationData.DataTable
             }
         }
 
+
         /// <summary>
         /// DBに存在するかチェック
         /// </summary>
         public override DataRow[] GetExistsDataRow( string directoryName ,
-                                                    Text.TextData textData ,
-                                                    Translate.TranslateText translateText )
+                                                   Text.TextData textData ,
+                                                   Translate.TranslateText translateText )
         {
-            Text.TextDataTechTree tData = (Text.TextDataTechTree)textData;
+            Text.TextDataStrategies tData = ( Text.TextDataStrategies ) textData;
 
             var where = new System.Text.StringBuilder();
             where.Clear();
@@ -57,15 +60,15 @@ namespace KspTsTool2.ConfigurationData.DataTable
             if ( directoryName != null )
             {
                 where.Append( String.Format( "{0}='{1}'" ,
-                                             ColumnNameDirName ,
-                                             this.DoubleSiglQrt( directoryName ) ) );
+                                         ColumnNameDirName ,
+                                         this.DoubleSiglQrt( directoryName ) ) );
+
                 where.Append( " AND " );
             }
 
-
             where.Append( String.Format( "{0}='{1}'" ,
-                                         ColumnNameID ,
-                                         this.DoubleSiglQrt( tData.ID ) ) );
+                                         ColumnNameName ,
+                                         this.DoubleSiglQrt( tData.Name ) ) );
 
 
             return this.Select( where.ToString() );
@@ -79,21 +82,18 @@ namespace KspTsTool2.ConfigurationData.DataTable
                                       Text.TextData textData ,
                                       Translate.TranslateText translateText )
         {
-            Text.TextDataTechTree tData = (Text.TextDataTechTree)textData;
-
+            Text.TextDataStrategies tData = ( Text.TextDataStrategies ) textData;
 
             if ( row.RowState == DataRowState.Added || row.RowState == DataRowState.Detached )
             {
-                // ID
-                this.SetDataValue( row , ColumnNameID , tData.ID );
+                // パーツ名
+                this.SetDataValue( row , ColumnNameName , tData.Name );
             }
 
-            // タイトル
+
+            // パーツタイトル
             this.SetDataValue( row , ColumnNameTitle , tData.Title );
-
-
         }
-
 
 
     }

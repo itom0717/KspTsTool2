@@ -1,46 +1,36 @@
 ﻿using System;
 using System.Data;
 
+
 namespace KspTsTool2.ConfigurationData.DataTable
 {
     /// <summary>
-    /// 翻訳データベース処理(TechTree)
+    /// 翻訳データベース処理(Departments)
     /// </summary>
-    public class TranslationDataTableTechTree : TranslationDataTable
+    public class TranslationDataTableDepartments : TranslationDataTable
     {
 
-        /// <summary>
-        /// ID
-        /// </summary>
-        private  static string ColumnNameID  = @"ID";
 
         /// <summary>
-        /// タイトル
+        /// Name
         /// </summary>
-        private static string ColumnNameTitle  = @"Title";
+        private static string ColumnNameName  = @"Name";
 
 
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        public TranslationDataTableTechTree() : base( DataType.TechTree )
+        public TranslationDataTableDepartments() : base( DataType.Departments )
         {
-
-            // ID
+            // name
             {
-                var column = this.Columns.Add( ColumnNameID , typeof( System.String ) );
-                column.DefaultValue = "";
-                column.AllowDBNull = false;
-                column.SetOrdinal( SetOrdinalCount++ );
-            }
-            // タイトル
-            {
-                var column = this.Columns.Add( ColumnNameTitle , typeof( System.String ) );
+                var column = this.Columns.Add( ColumnNameName , typeof( System.String ) );
                 column.DefaultValue = "";
                 column.AllowDBNull = false;
                 column.SetOrdinal( SetOrdinalCount++ );
             }
         }
+
 
         /// <summary>
         /// DBに存在するかチェック
@@ -49,7 +39,7 @@ namespace KspTsTool2.ConfigurationData.DataTable
                                                     Text.TextData textData ,
                                                     Translate.TranslateText translateText )
         {
-            Text.TextDataTechTree tData = (Text.TextDataTechTree)textData;
+            Text.TextDataDepartments tData = ( Text.TextDataDepartments ) textData;
 
             var where = new System.Text.StringBuilder();
             where.Clear();
@@ -57,16 +47,14 @@ namespace KspTsTool2.ConfigurationData.DataTable
             if ( directoryName != null )
             {
                 where.Append( String.Format( "{0}='{1}'" ,
-                                             ColumnNameDirName ,
-                                             this.DoubleSiglQrt( directoryName ) ) );
+                                         ColumnNameDirName ,
+                                         this.DoubleSiglQrt( directoryName ) ) );
                 where.Append( " AND " );
             }
 
-
             where.Append( String.Format( "{0}='{1}'" ,
-                                         ColumnNameID ,
-                                         this.DoubleSiglQrt( tData.ID ) ) );
-
+                                         ColumnNameName ,
+                                         this.DoubleSiglQrt( tData.Name ) ) );
 
             return this.Select( where.ToString() );
         }
@@ -79,22 +67,15 @@ namespace KspTsTool2.ConfigurationData.DataTable
                                       Text.TextData textData ,
                                       Translate.TranslateText translateText )
         {
-            Text.TextDataTechTree tData = (Text.TextDataTechTree)textData;
-
+            Text.TextDataDepartments tData = ( Text.TextDataDepartments ) textData;
 
             if ( row.RowState == DataRowState.Added || row.RowState == DataRowState.Detached )
             {
-                // ID
-                this.SetDataValue( row , ColumnNameID , tData.ID );
+                // パーツ名
+                this.SetDataValue( row , ColumnNameName , tData.Name );
             }
 
-            // タイトル
-            this.SetDataValue( row , ColumnNameTitle , tData.Title );
-
-
         }
-
-
 
     }
 }

@@ -8,8 +8,7 @@
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        /// <param name="key"></param>
-        /// <param name="text"></param>
+        /// <param name="sourceText"></param>
         public TranslateTextTechTree( string sourceText )
         {
             this.SourceText = sourceText;

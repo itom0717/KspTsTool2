@@ -41,13 +41,16 @@ namespace KspTsTool2.MicrosoftTranslatorAPI
         public TranslatorApi( string clientId ,
                               string clientSecret )
         {
-
+#if DEBUG
+#else
             //Get Client Id And Client Secret from https//datamarket.azure.com/developer/applications/
             //Refer obtaining AccessToken (http://msdn.microsoft.com/en-us/library/hh454950.aspx) 
             // clientIDには、事前にマイクロソフトへ登録した「クライアントID」を設定。
             // client secretには、事前にマイクロソフトへ登録した「顧客の秘密」を設定。
             this.AdmAuth = new AdmAuthentication( clientId ,
                                                   clientSecret );
+
+#endif
         }
 
         /// <summary>
@@ -57,6 +60,10 @@ namespace KspTsTool2.MicrosoftTranslatorAPI
         /// <returns></returns>
         public string TranslateEnglishToJapanese( string englishText )
         {
+
+#if DEBUG
+            return "Debug - " + englishText;
+#else
             try
             {
                 //アクセストークン取得
@@ -89,6 +96,7 @@ namespace KspTsTool2.MicrosoftTranslatorAPI
             {
                 throw new ApplicationException( this.GetErrorMessage( ex ) , ex );
             }
+#endif
         }
 
 
@@ -99,8 +107,8 @@ namespace KspTsTool2.MicrosoftTranslatorAPI
         /// <param name="text"></param>
         /// <returns></returns>
         private string TranslateMethod( string authToken ,
-                                        string text,
-                                        string from,
+                                        string text ,
+                                        string from ,
                                         string to )
         {
             string translation = "";

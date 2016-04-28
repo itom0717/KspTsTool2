@@ -12,12 +12,12 @@ namespace KspTsTool2.ConfigurationData.DataTable
         /// <summary>
         /// サイエンスレポートID
         /// </summary>
-        private static string ColumnNameScienceDefsID  = @"ID";
+        private static string ColumnNameID  = @"ID";
 
         /// <summary>
         /// サイエンスレポートタイトル
         /// </summary>
-        private static string ColumnNameScienceDefsTitle  = @"Title";
+        private static string ColumnNameTitle  = @"Title";
 
         /// <summary>
         /// サイエンスレポートResultText
@@ -40,14 +40,14 @@ namespace KspTsTool2.ConfigurationData.DataTable
 
             // サイエンスレポートID
             {
-                var column = this.Columns.Add( ColumnNameScienceDefsID , typeof( System.String ) );
+                var column = this.Columns.Add( ColumnNameID , typeof( System.String ) );
                 column.DefaultValue = "";
                 column.AllowDBNull = false;
                 column.SetOrdinal( SetOrdinalCount++ );
             }
             // サイエンスレポートタイトル
             {
-                var column = this.Columns.Add( ColumnNameScienceDefsTitle , typeof( System.String ) );
+                var column = this.Columns.Add( ColumnNameTitle , typeof( System.String ) );
                 column.DefaultValue = "";
                 column.AllowDBNull = false;
                 column.SetOrdinal( SetOrdinalCount++ );
@@ -78,13 +78,13 @@ namespace KspTsTool2.ConfigurationData.DataTable
                                                     Text.TextData textData ,
                                                     Translate.TranslateText translateText )
         {
-            Text.TextDataScienceDefs textDataScienceDefs = (Text.TextDataScienceDefs)textData;
-            Translate.TranslateTextScienceDefs translateTextScienceDefs = ( Translate.TranslateTextScienceDefs ) translateText;
+            Text.TextDataScienceDefs tData = (Text.TextDataScienceDefs)textData;
+            Translate.TranslateTextScienceDefs tText = ( Translate.TranslateTextScienceDefs ) translateText;
 
             var where = new System.Text.StringBuilder();
             where.Clear();
 
-            if( directoryName != null)
+            if ( directoryName != null )
             {
                 where.Append( String.Format( "{0}='{1}'" ,
                                              ColumnNameDirName ,
@@ -94,18 +94,18 @@ namespace KspTsTool2.ConfigurationData.DataTable
 
 
             where.Append( String.Format( "{0}='{1}'" ,
-                                         ColumnNameScienceDefsID ,
-                                         this.DoubleSiglQrt( textDataScienceDefs.ScienceDefsID ) ) );
+                                         ColumnNameID ,
+                                         this.DoubleSiglQrt( tData.ID ) ) );
 
             where.Append( " AND " );
             where.Append( String.Format( "{0}='{1}'" ,
                                          ColumnNameResultText ,
-                                         this.DoubleSiglQrt( translateTextScienceDefs.Result.ResultText ) ) );
+                                         this.DoubleSiglQrt( tText.Result.ResultText ) ) );
 
             where.Append( " AND " );
             where.Append( String.Format( "{0}='{1}'" ,
                                          ColumnNameResultIndex ,
-                                         translateTextScienceDefs.Result.ResultIndex.ToString() ) );
+                                         tText.Result.ResultIndex.ToString() ) );
 
 
             return this.Select( where.ToString() );
@@ -119,24 +119,24 @@ namespace KspTsTool2.ConfigurationData.DataTable
                                       Text.TextData textData ,
                                       Translate.TranslateText translateText )
         {
-            Text.TextDataScienceDefs textDataScienceDefs = (Text.TextDataScienceDefs)textData;
-            Translate.TranslateTextScienceDefs translateTextScienceDefs = ( Translate.TranslateTextScienceDefs ) translateText;
+            Text.TextDataScienceDefs tData = (Text.TextDataScienceDefs)textData;
+            Translate.TranslateTextScienceDefs tText = ( Translate.TranslateTextScienceDefs ) translateText;
 
 
             if ( row.RowState == DataRowState.Added || row.RowState == DataRowState.Detached )
             {
                 // サイエンスレポートID
-                this.SetDataValue( row , ColumnNameScienceDefsID , textDataScienceDefs.ScienceDefsID );
+                this.SetDataValue( row , ColumnNameID , tData.ID );
 
                 // サイエンスレポートResultText
-                this.SetDataValue( row , ColumnNameResultText , translateTextScienceDefs.Result.ResultText );
+                this.SetDataValue( row , ColumnNameResultText , tText.Result.ResultText );
 
                 // サイエンスレポートResultIndex
-                this.SetDataValue( row , ColumnNameResultIndex , translateTextScienceDefs.Result.ResultIndex );
+                this.SetDataValue( row , ColumnNameResultIndex , tText.Result.ResultIndex );
             }
 
             // サイエンスレポートタイトル
-            this.SetDataValue( row , ColumnNameScienceDefsTitle , textDataScienceDefs.ScienceDefsTitle );
+            this.SetDataValue( row , ColumnNameTitle , tData.Title );
 
 
         }

@@ -34,8 +34,8 @@ namespace KspTsTool2.Forms
         {
             //現在の値をコントロールに設定
             this.IsMachineTranslationCheckBox.Checked = this.SettingsParameters.IsMachineTranslation;
-            this.ClientIdTextBox.Text                 = this.SettingsParameters.MicrosoftTranslatorAPIClientId;
-            this.ClientSecretTextBox.Text             = this.SettingsParameters.MicrosoftTranslatorAPIClientSecret;
+            this.ClientIdTextBox.Text = this.SettingsParameters.MicrosoftTranslatorAPIClientId;
+            this.ClientSecretTextBox.Text = this.SettingsParameters.MicrosoftTranslatorAPIClientSecret;
 
             //テキストボックスの有効無効切り替え
             this.ChangeEnabledControl( this.IsMachineTranslationCheckBox.Checked );
@@ -66,17 +66,17 @@ namespace KspTsTool2.Forms
                     || this.ClientSecretTextBox.Text.Trim().Equals( "" ) )
                 {
                     MessageBox.Show(
-                        "Microsoft Translator API を使用して日本語へ翻訳を行う場合は、\n「クライアントID」と「顧客の秘密」を入力してください。",
-                        "",
-                        MessageBoxButtons.OK,
+                        "Microsoft Translator API を使用して日本語へ翻訳を行う場合は、\n「クライアントID」と「顧客の秘密」を入力してください。" ,
+                        "" ,
+                        MessageBoxButtons.OK ,
                         MessageBoxIcon.Asterisk );
                     return;
                 }
             }
 
             //設定を記憶
-            this.SettingsParameters.IsMachineTranslation               = this.IsMachineTranslationCheckBox.Checked;
-            this.SettingsParameters.MicrosoftTranslatorAPIClientId     = this.ClientIdTextBox.Text.Trim();
+            this.SettingsParameters.IsMachineTranslation = this.IsMachineTranslationCheckBox.Checked;
+            this.SettingsParameters.MicrosoftTranslatorAPIClientId = this.ClientIdTextBox.Text.Trim();
             this.SettingsParameters.MicrosoftTranslatorAPIClientSecret = this.ClientSecretTextBox.Text.Trim();
 
             //フォーム閉じる
@@ -102,7 +102,7 @@ namespace KspTsTool2.Forms
         /// </summary>
         private void ChangeEnabledControl( bool isEnable )
         {
-            this.ClientIdTextBox.Enabled     = isEnable;
+            this.ClientIdTextBox.Enabled = isEnable;
             this.ClientSecretTextBox.Enabled = isEnable;
         }
 

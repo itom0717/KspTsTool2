@@ -29,41 +29,41 @@ namespace KspTsTool2.ConfigurationData.Export
                     if ( textData.DataType == DataType.StoryDefs )
                     {
                         ///StoryDefs
-                        var textDataStoryDefs = ( Text.TextDataStoryDefs ) textData;
+                        var tData = ( Text.TextDataStoryDefs ) textData;
 
 
-                        if ( textDataStoryDefs.TranslateTextList.Count >= 1 )
+                        if ( tData.TranslateTextList.Count >= 1 )
                         {
                             if ( directoryName.Equals( VanillaDirectoryName , StringComparison.CurrentCultureIgnoreCase ) )
                             {
                                 //(Vanilla
-                                exportData.AppendLine( String.Format( "@{0}" , textDataStoryDefs.TextNodeTitle  ) );
+                                exportData.AppendLine( String.Format( "@{0}" , tData.Title ) );
                             }
                             else
                             {
                                 //MOD
-                                exportData.AppendLine( String.Format( "@{0}:NEEDS[{1}]:FINAL" , textDataStoryDefs.TextNodeTitle , directoryName ) );
+                                exportData.AppendLine( String.Format( "@{0}:NEEDS[{1}]:FINAL" , tData.Title , directoryName ) );
                             }
                             exportData.AppendLine( "{" );
 
-                            foreach ( Translate.TranslateText translateText in textDataStoryDefs.TranslateTextList )
+                            foreach ( Translate.TranslateText translateText in tData.TranslateTextList )
                             {
-                                var translateTextStoryDefs = ( Translate.TranslateTextStoryDefs ) translateText;
+                                var tText = ( Translate.TranslateTextStoryDefs ) translateText;
 
                                 exportData.AppendLine( "\t//English Text" );
-                                exportData.AppendLine( "\t//\t" + String.Format( @"{0},{1} = {2}" , translateTextStoryDefs.TextNode.TextTitle , translateTextStoryDefs.TextNode.TextIndex , translateTextStoryDefs.SourceText ) );
+                                exportData.AppendLine( "\t//\t" + String.Format( @"{0},{1} = {2}" , tText.TextNode.TextTitle , tText.TextNode.TextIndex , tText.SourceText ) );
                                 exportData.AppendLine( "\t//Japanese Text" );
-                                if ( translateTextStoryDefs.JapaneseText.Equals( "" ) || translateTextStoryDefs.JapaneseText.Equals( translateTextStoryDefs.SourceText ) )
+                                if ( tText.JapaneseText.Equals( "" ) || tText.JapaneseText.Equals( tText.SourceText ) )
                                 {
-                                    exportData.AppendLine( "\t//\t" + String.Format( @"@{0},{1} = " , translateTextStoryDefs.TextNode.TextTitle , translateTextStoryDefs.TextNode.TextIndex ) );
+                                    exportData.AppendLine( "\t//\t" + String.Format( @"@{0},{1} = " , tText.TextNode.TextTitle , tText.TextNode.TextIndex ) );
                                 }
                                 else
                                 {
-                                    if ( !translateTextStoryDefs.Comment.Equals( "" ) )
+                                    if ( !tText.Comment.Equals( "" ) )
                                     {
-                                        exportData.AppendLine( "\t//\t" + translateTextStoryDefs.Comment );
+                                        exportData.AppendLine( "\t//\t" + tText.Comment );
                                     }
-                                    exportData.AppendLine( "\t\t" + String.Format( @"@{0},{1} = {2}" , translateTextStoryDefs.TextNode.TextTitle , translateTextStoryDefs.TextNode.TextIndex , translateTextStoryDefs.JapaneseText ) );
+                                    exportData.AppendLine( "\t\t" + String.Format( @"@{0},{1} = {2}" , tText.TextNode.TextTitle , tText.TextNode.TextIndex , tText.JapaneseText ) );
                                 }
                                 exportData.AppendLine( "" );
 

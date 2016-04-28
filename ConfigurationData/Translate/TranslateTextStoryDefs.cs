@@ -34,7 +34,7 @@
         /// </summary>
         /// <param name="keyText"></param>
         /// <param name="keyIndex"></param>
-        /// <param name="englishText"></param>
+        /// <param name="sourceText"></param>
         public TranslateTextStoryDefs( string keyText ,
                                        int keyIndex ,
                                        string sourceText )

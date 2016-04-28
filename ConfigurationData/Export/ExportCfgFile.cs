@@ -26,14 +26,14 @@ namespace KspTsTool2.ConfigurationData.Export
         /// データ書き出し
         /// </summary>
         /// <param name="configurationFolder"></param>
-        public abstract void Export( string directoryName, string savePath,List<ConfigurationFile> cnfigurationFile );
+        public abstract void Export( string directoryName , string savePath , List<ConfigurationFile> cnfigurationFile );
 
 
         /// <summary>
         /// データ書き出し
         /// </summary>
         /// <param name="cfgFilename"></param>
-        protected void DataWrite(string cfgFilename, System.Text.StringBuilder exportData )
+        protected void DataWrite( string cfgFilename , System.Text.StringBuilder exportData )
         {
 
             //ファイル削除

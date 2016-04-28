@@ -34,9 +34,9 @@ namespace KspTsTool2.ConfigurationData
                 Type t = Type.GetType(typeof( Export.ExportCfgFile ).FullName + Enum.GetName(typeof(DataType), dataType));
                 object export = Activator.CreateInstance(t);
 
-                ( ( Export.ExportCfgFile ) export ).Export(this.DirectoryName ,
-                                                           this.SavePath,
-                                                           this);
+                ( ( Export.ExportCfgFile ) export ).Export( this.DirectoryName ,
+                                                           this.SavePath ,
+                                                           this );
             }
 
 

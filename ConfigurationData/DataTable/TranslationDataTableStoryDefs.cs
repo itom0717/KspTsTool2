@@ -12,7 +12,7 @@ namespace KspTsTool2.ConfigurationData.DataTable
         /// <summary>
         /// タイトル
         /// </summary>
-        private static string ColumnNameStoryDefsTitle  = @"Title";
+        private static string ColumnNameTitle  = @"Title";
 
         /// <summary>
         /// NoteText
@@ -33,7 +33,7 @@ namespace KspTsTool2.ConfigurationData.DataTable
 
             // タイトル
             {
-                var column = this.Columns.Add( ColumnNameStoryDefsTitle , typeof( System.String ) );
+                var column = this.Columns.Add( ColumnNameTitle , typeof( System.String ) );
                 column.DefaultValue = "";
                 column.AllowDBNull = false;
                 column.SetOrdinal( SetOrdinalCount++ );
@@ -64,8 +64,8 @@ namespace KspTsTool2.ConfigurationData.DataTable
                                                     Text.TextData textData ,
                                                     Translate.TranslateText translateText )
         {
-            Text.TextDataStoryDefs textDataStoryDefs = (Text.TextDataStoryDefs)textData;
-            Translate.TranslateTextStoryDefs translateTextStoryDefs = ( Translate.TranslateTextStoryDefs ) translateText;
+            Text.TextDataStoryDefs tData = (Text.TextDataStoryDefs)textData;
+            Translate.TranslateTextStoryDefs tText = ( Translate.TranslateTextStoryDefs ) translateText;
 
             var where = new System.Text.StringBuilder();
             where.Clear();
@@ -80,18 +80,18 @@ namespace KspTsTool2.ConfigurationData.DataTable
 
 
             where.Append( String.Format( "{0}='{1}'" ,
-                                         ColumnNameStoryDefsTitle ,
-                                         this.DoubleSiglQrt( textDataStoryDefs.TextNodeTitle  ) ) );
+                                         ColumnNameTitle ,
+                                         this.DoubleSiglQrt( tData.Title ) ) );
 
             where.Append( " AND " );
             where.Append( String.Format( "{0}='{1}'" ,
                                          ColumnNameNoteText ,
-                                         this.DoubleSiglQrt( translateTextStoryDefs.TextNode.TextTitle ) ) );
+                                         this.DoubleSiglQrt( tText.TextNode.TextTitle ) ) );
 
             where.Append( " AND " );
             where.Append( String.Format( "{0}='{1}'" ,
                                          ColumnNameNoteIndex ,
-                                         translateTextStoryDefs.TextNode.TextIndex.ToString() ) );
+                                         tText.TextNode.TextIndex.ToString() ) );
 
 
             return this.Select( where.ToString() );
@@ -105,20 +105,20 @@ namespace KspTsTool2.ConfigurationData.DataTable
                                       Text.TextData textData ,
                                       Translate.TranslateText translateText )
         {
-            Text.TextDataStoryDefs textDataStoryDefs = (Text.TextDataStoryDefs)textData;
-            Translate.TranslateTextStoryDefs translateTextStoryDefs = ( Translate.TranslateTextStoryDefs ) translateText;
+            Text.TextDataStoryDefs tData = (Text.TextDataStoryDefs)textData;
+            Translate.TranslateTextStoryDefs tText = ( Translate.TranslateTextStoryDefs ) translateText;
 
 
             if ( row.RowState == DataRowState.Added || row.RowState == DataRowState.Detached )
             {
                 // サイエンスレポートID
-                this.SetDataValue( row , ColumnNameStoryDefsTitle , textDataStoryDefs.TextNodeTitle );
+                this.SetDataValue( row , ColumnNameTitle , tData.Title );
 
                 // サイエンスレポートResultText
-                this.SetDataValue( row , ColumnNameNoteText , translateTextStoryDefs.TextNode.TextTitle );
+                this.SetDataValue( row , ColumnNameNoteText , tText.TextNode.TextTitle );
 
                 // サイエンスレポートResultIndex
-                this.SetDataValue( row , ColumnNameNoteIndex , translateTextStoryDefs.TextNode.TextIndex );
+                this.SetDataValue( row , ColumnNameNoteIndex , tText.TextNode.TextIndex );
             }
 
         }

@@ -21,12 +21,12 @@ namespace KspTsTool2.ConfigurationData
             /// <summary>
             /// ID
             /// </summary>
-            public int ID { get; set; }  = 0;
+            public int ID { get; set; } = 0;
 
             /// <summary>
             /// IDText
             /// </summary>
-            public string IDText { get { return String.Format("({0:000000000})",this.ID); } }
+            public string IDText { get { return String.Format( "({0:000000000})" , this.ID ); } }
 
             /// <summary>
             /// DirectoryName
@@ -77,7 +77,7 @@ namespace KspTsTool2.ConfigurationData
         public void LoadProperNounTable()
         {
             string fileName = Common.File.CombinePath (Common.File.GetApplicationDirectory(), ProperNounTableFileName);
-            if (!Common.File.ExistsFile( fileName ) )
+            if ( !Common.File.ExistsFile( fileName ) )
             {
                 //ファイル見つからない
                 return;
@@ -100,7 +100,7 @@ namespace KspTsTool2.ConfigurationData
             this.ReplaceTableListMaxID = 0;
 
             //ファイルの解析
-            using ( var sr = new System.IO.StreamReader( fileName, System.Text.Encoding.UTF8 ) )
+            using ( var sr = new System.IO.StreamReader( fileName , System.Text.Encoding.UTF8 ) )
             {
                 while ( sr.Peek() > -1 )
                 {
@@ -108,7 +108,7 @@ namespace KspTsTool2.ConfigurationData
                     string lineText = sr.ReadLine();
 
                     //コメント削除
-                    lineText = regexComment.Replace( lineText, "" );
+                    lineText = regexComment.Replace( lineText , "" );
 
                     //前後の空白取り除き
                     lineText = lineText.Trim();
@@ -177,7 +177,7 @@ namespace KspTsTool2.ConfigurationData
         /// <param name="a"></param>
         /// <param name="b"></param>
         /// <returns></returns>
-        private static int CompareByTextLength( ReplaceTable a, ReplaceTable b )
+        private static int CompareByTextLength( ReplaceTable a , ReplaceTable b )
         {
             return b.OriginalText.Length - a.OriginalText.Length;
         }
@@ -188,7 +188,7 @@ namespace KspTsTool2.ConfigurationData
         /// </summary>
         /// <param name="orgText"></param>
         /// <returns></returns>
-        public string ReplaceDummyText(string directoryName, string orgText, DataType dataType)
+        public string ReplaceDummyText( string directoryName , string orgText , DataType dataType )
         {
             var replaceText = new  StringBuilder();
             replaceText.Append( orgText );
@@ -239,7 +239,7 @@ namespace KspTsTool2.ConfigurationData
 
                         foreach ( Match item in mc )
                         {
-                            replaceText.Append( checkText.Substring( lastIndex, item.Index - lastIndex ) );
+                            replaceText.Append( checkText.Substring( lastIndex , item.Index - lastIndex ) );
                             replaceText.Append( item.Groups[1].Value );//前部分
                             replaceText.Append( replaceTable.IDText );//ID埋め込み
                             replaceText.Append( item.Groups[3].Value );//後ろ部分
@@ -265,7 +265,7 @@ namespace KspTsTool2.ConfigurationData
             string replaceText = orgText;
             foreach ( var replaceTable in this.ReplaceTableList )
             {
-                replaceText = replaceText.Replace( replaceTable.IDText, replaceTable.ReplaceText );
+                replaceText = replaceText.Replace( replaceTable.IDText , replaceTable.ReplaceText );
             }
             return replaceText;
         }
@@ -276,7 +276,7 @@ namespace KspTsTool2.ConfigurationData
         /// </summary>
         /// <param name="srcText"></param>
         /// <returns></returns>
-        private string escapeText(string srcText)
+        private string escapeText( string srcText )
         {
             string dstText = srcText;
 

@@ -1,16 +1,16 @@
 ﻿namespace KspTsTool2.ConfigurationData.Translate
 {
     /// <summary>
-    /// 翻訳するテキストデータ(パーツ用)
+    /// 翻訳するテキストデータ(Departments)
     /// </summary>
-    public class TranslateTextParts : TranslateText
+    public class TranslateTextDepartments : TranslateText
     {
 
         /// <summary>
         /// コンストラクタ
         /// </summary>
         /// <param name="sourceText"></param>
-        public TranslateTextParts( string sourceText )
+        public TranslateTextDepartments( string sourceText )
         {
             this.SourceText = sourceText;
             this.JapaneseText = "";

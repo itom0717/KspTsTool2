@@ -1,3 +1,6 @@
+Ver 2.3.0.0
+  2016/04/21 Departments、Strategies対応
+
 Ver 2.2.1.0
   2016/04/20 TechTree修正
 

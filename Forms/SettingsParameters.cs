@@ -59,7 +59,7 @@ namespace KspTsTool2.Forms
             }
             set
             {
-                Properties.Settings.Default.GameDataPathList = string.Join("\t", value.ToArray());
+                Properties.Settings.Default.GameDataPathList = string.Join( "\t" , value.ToArray() );
             }
         }
 
@@ -162,7 +162,7 @@ namespace KspTsTool2.Forms
         /// 顧客の秘密
         /// </summary>
         /// <returns></returns>
-        public  string MicrosoftTranslatorAPIClientSecret
+        public string MicrosoftTranslatorAPIClientSecret
         {
             get
             {

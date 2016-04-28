@@ -15,24 +15,24 @@ namespace KspTsTool2.ConfigurationData.Text
         /// <summary>
         /// ID
         /// </summary>
-        public string TechTreeID { get; private set; } = "";
+        public string ID { get; private set; } = "";
 
         /// <summary>
         /// タイトル
         /// </summary>
-        public string TechTreeTitle { get; private set; } = "";
+        public string Title { get; private set; } = "";
 
 
         /// <summary>
         /// TechTree用データ設定
         /// </summary>
         public TextDataTechTree( string id ,
-                                 string title,
+                                 string title ,
                                  string description )
         {
             this.DataType = DataType.TechTree;
-            this.TechTreeID = id;
-            this.TechTreeTitle = title;
+            this.ID = id;
+            this.Title = title;
             this.TranslateTextList.Add( new Translate.TranslateTextParts( description ) );
         }
 

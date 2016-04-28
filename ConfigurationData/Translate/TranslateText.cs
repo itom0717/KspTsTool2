@@ -17,7 +17,7 @@
         /// <summary>
         /// 日本語テキスト
         /// </summary>
-        public string JapaneseText { get;  set; } = "";
+        public string JapaneseText { get; set; } = "";
 
 
         /// <summary>

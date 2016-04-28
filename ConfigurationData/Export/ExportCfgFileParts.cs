@@ -35,41 +35,41 @@ namespace KspTsTool2.ConfigurationData.Export
                     if ( textData.DataType == DataType.Parts )
                     {
                         //パーツ
-                        var textDataParts = ( Text.TextDataParts ) textData;
-                        if ( textDataParts.TranslateTextList.Count >= 1 )
+                        var tData = ( Text.TextDataParts ) textData;
+                        if ( tData.TranslateTextList.Count >= 1 )
                         {
                             //スペースが含まれている場合は、?に変換
-                            string pName = textDataParts.PartName;
-                            pName = pName.Replace( " " , "?" );
+                            string name = tData.Name;
+                            name = name.Replace( " " , "?" );
 
-                            if( directoryName.Equals(VanillaDirectoryName,StringComparison.CurrentCultureIgnoreCase ) )
+                            if ( directoryName.Equals( VanillaDirectoryName , StringComparison.CurrentCultureIgnoreCase ) )
                             {
                                 //(Vanilla
-                                exportData.AppendLine( String.Format( "@PART[{0}]" , pName ) );
+                                exportData.AppendLine( String.Format( "@PART[{0}]" , name ) );
                             }
                             else
                             {
                                 //MOD
-                                exportData.AppendLine( String.Format( "@PART[{0}]:NEEDS[{1}]:FINAL" , pName , directoryName ) );
+                                exportData.AppendLine( String.Format( "@PART[{0}]:NEEDS[{1}]:FINAL" , name , directoryName ) );
                             }
                             exportData.AppendLine( "{" );
 
                             exportData.AppendLine( "\t//Title" );
-                            exportData.AppendLine( "\t//\t" + textDataParts.PartTitle );
+                            exportData.AppendLine( "\t//\t" + tData.Title );
                             exportData.AppendLine( "\t//English Text" );
-                            exportData.AppendLine( "\t//\t" + String.Format( @"@description = {0}" , textDataParts.TranslateTextList[0].SourceText ) );
+                            exportData.AppendLine( "\t//\t" + String.Format( @"@description = {0}" , tData.TranslateTextList[0].SourceText ) );
                             exportData.AppendLine( "\t//Japanese Text" );
-                            if ( textDataParts.TranslateTextList[0].JapaneseText.Equals( "" ) || textDataParts.TranslateTextList[0].JapaneseText.Equals( textDataParts.TranslateTextList[0].SourceText ) )
+                            if ( tData.TranslateTextList[0].JapaneseText.Equals( "" ) || tData.TranslateTextList[0].JapaneseText.Equals( tData.TranslateTextList[0].SourceText ) )
                             {
                                 exportData.AppendLine( "\t//\t" + @"@description = " );
                             }
                             else
                             {
-                                if ( !textDataParts.TranslateTextList[0].Comment.Equals( "" ) )
+                                if ( !tData.TranslateTextList[0].Comment.Equals( "" ) )
                                 {
-                                    exportData.AppendLine( "\t//\t" + textDataParts.TranslateTextList[0].Comment );
+                                    exportData.AppendLine( "\t//\t" + tData.TranslateTextList[0].Comment );
                                 }
-                                exportData.AppendLine( "\t\t" + String.Format( @"@description = {0}" , textDataParts.TranslateTextList[0].JapaneseText ) );
+                                exportData.AppendLine( "\t\t" + String.Format( @"@description = {0}" , tData.TranslateTextList[0].JapaneseText ) );
                             }
 
                             exportData.AppendLine( "}" );

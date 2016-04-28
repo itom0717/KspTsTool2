@@ -13,18 +13,18 @@ namespace KspTsTool2.ConfigurationData.Text
     {
 
         /// <summary>
-        /// ID
+        /// Title
         /// </summary>
-        public string TextNodeTitle { get; private set; } = "";
+        public string Title { get; private set; } = "";
 
         /// <summary>
         /// StoryDefs用データ設定
         /// </summary>
-        public TextDataStoryDefs( string id ,
+        public TextDataStoryDefs( string title ,
                                  List<Translate.TranslateText> textNodeText )
         {
             this.DataType = DataType.StoryDefs;
-            this.TextNodeTitle = id;
+            this.Title = title;
             this.TranslateTextList = textNodeText;
         }
 
