@@ -1,64 +1,67 @@
-Kerbal Space Program Translation Support Tool 2 for KSP 1.1
+Kerbal Space Program Translation Support Tool 2 for KSP
 ====
 
-���̃v���O������ Kerbal Space Program �̃p�[�c����уT�C�G���X���|�[�g�̐������𒊏o���AMicrosoft Translator API���g�p���Ď����ŋ@�B�|�󂵂܂��B  
-ModuleManager.dll �Ŏg�p����cfg�t�@�C�����쐬���܂��B  
+このプログラムは Kerbal Space Program のパーツおよびサイエンスレポートの説明文を抽出し、Microsoft Translator APIを使用して自動で機械翻訳します。  
+ModuleManager.dll で使用するcfgファイルを作成します。  
 
-###��Kerbal Space Program�{�̂̃t�@�C���͈�ؕύX���܂���BModuleManager.dll�p��Config�t�@�C�����쐬���邾���ł��B  
-###��ModuleManager.dll�͕ʓr���肵�Ă��������B  
-
-## �J����
- Microsoft Visual Studio Community 2015
-
-## �K�v�����^�C��
- .NET Framework 4.5.2  
-
-## �g����
-
-###���O����  
-�����|�󂳂���ꍇ��Microsoft Translator API�́u�N���C�A���gID�v�Ɓu�ڋq�̔閧�v���擾����K�v������܂��B  
-��Windows Azure Marketplace�֓o�^�����K�v�ł��B(�L���ł�����܂����A�����ł�OK�j   
-�����͂Ŗ|�󂷂�ꍇ�ŉp�ꕶ�͂̒��o�݂̂ł�����AID�̓o�^�͕s�v�ł��B  
+###※Kerbal Space Program本体のファイルは一切変更しません。ModuleManager.dll用のConfigファイルを作成するだけです。  
+###※ModuleManager.dllは別途入手してください。  
 
 
-###���s���@  
-�@ �����Ώۃt�H���_(GameData�t�H���_)�� Kerbal Space Program���C���X�g�[��������ɂ���AGameData�t�H���_���w�肵�܂��B  
+## 必要環境・ソフト
+ Kerbal Space Program本体 --- 1.1以上  
+ ModuleManager.dll　--- Kerbal Space Programのバージョンに対応したもの。  
+ .NET Framework 4.5.2   
+
+## 使い方
+
+###事前準備  
+自動翻訳させる場合はMicrosoft Translator APIの「クライアントID」と「顧客の秘密」を取得する必要があります。  
+※Windows Azure Marketplaceへ登録等が必要です。(有料版もありますが、無料版でOK）   
+※自力で翻訳する場合で英語文章の抽出のみでしたら、IDの登録は不要です。  
+
+
+###実行方法  
+① 処理対象フォルダ(GameDataフォルダ)は Kerbal Space Programをインストールした先にある、GameDataフォルダを指定します。  
   
-�A �|��ς݃f�[�^�ۑ��t�H���_���́A�@��GameData���ɍ쐬����t�@�C�������w�肵�܂��B  
+② 翻訳済みデータ保存フォルダ名は、①のGameData内に作成するファイル名を指定します。  
   
-�B�u�|��ݒ�v�ŁA�����|��̗L��/������ݒ肵�܂��B  
-   �����|����s�Ȃ��ꍇ�́AMicrosoft Translator API�́u�N���C�A���gID�v�Ɓu�ڋq�̔閧�v����͂��܂��B  
+③「翻訳設定」で、自動翻訳の有効/無効を設定します。  
+   自動翻訳を行なう場合は、Microsoft Translator APIの「クライアントID」と「顧客の秘密」を入力します。  
   
-�C �u�������s�v�ŏ������J�n���܂��B  �����ŋ@�B�|�󂷂�ꍇ�͏������Ԃ�������܂��̂ŁA�C���ɑ҂��Ă��������B
+④ 「処理実行」で処理を開始します。  自動で機械翻訳する場合は少し時間がかかりますので、気長に待ってください。
   
-�D �I������ƇA�Ŏw�肵���t�H���_�� ModuleManager�p��cfg�t�@�C�� ����������܂��̂ŁAModuleManager.dll �œǂݍ��܂��Ă��������B  
+⑤ 終了すると②で指定したフォルダに ModuleManager用のcfgファイル が生成されますので、ModuleManager.dll で読み込ませてください。  
 
-�@�@Kerbal Space Program  
-�@�@�@�@�@+--- GameData  <---------- �@�Ŏw�肷��t�H���_
-�@�@�@�@�@�@�@+--- Squad  
-�@�@�@�@�@�@�@+--- (�eMOD�̃t�H���_)   
-�@�@�@�@�@�@�@+---  �E  
-�@�@�@�@�@�@�@+---  �E  
-�@�@�@�@�@�@�@+---  �E  
-�@�@�@�@�@�@�@+--- ModuleManager.dll <--- ��ݒu  
-�@�@�@�@�@�@�@+--- @toJapanese  <--- �A�Ŏw�肷��t�H���_��  
+　　Kerbal Space Program  
+　　　　　+--- GameData  <---------- ①で指定するフォルダ
+　　　　　　　+--- Squad  
+　　　　　　　+--- (各MODのフォルダ)   
+　　　　　　　+---  ・  
+　　　　　　　+---  ・  
+　　　　　　　+---  ・  
+　　　　　　　+--- ModuleManager.dll <--- を設置  
+　　　　　　　+--- @toJapanese  <--- ②で指定するフォルダ名  
   
 
-###�����Ŗ|��܂��͓��{����C������ꍇ  
-�@�B�|��ł́i�قƂ�ǁj�Ӗ����ʂ��Ȃ��̂ŁA�����ŏC�����Ă��������B  
+###自分で翻訳または日本語を修正する場合  
+機械翻訳では（ほとんど）意味が通じないので、自分で修正してください。  
 
-�@�|��f�[�^�ۑ���ɂ���A*.cfg�t�@�C���̓��{�ꕔ����ҏW���܂��B  
-�@���R�����g�A�E�g // �ɂȂ��Ă���ꍇ�́@//�������Ă��������B
+①翻訳データ保存先にある、*.cfgファイルの日本語部分を編集します。  
+　※コメントアウト // になっている場合は　//を消してください。
 
-�AModuleManager.dll�œǂݍ��܂��܂��B  �I���B
+②ModuleManager.dllで読み込ませます。  終わり。
 
-�B���񏈗����ɏC�������|��f�[�^���g�p���邽�߁A�|��f�[�^�x�[�X�Ɏ�荞��ł����܂��B
+③次回処理時に修正した翻訳データを使用するため、翻訳データベースに取り込んでおきます。
 
-�C�u�|��t�@�C���Ǎ��v�� �@�ŏC������*.cfg�t�@�C����I�����Ŏ�荞�݂܂��B
+④「翻訳ファイル読込」で ①で修正した*.cfgファイルを選択しで取り込みます。
 
-���L�u�̕��X���|�󂳂ꂽ ModuleManager�p�� *.cfg�t�@�C������荞�߂邩���B  
+※有志の方々が翻訳された ModuleManager用の *.cfgファイルも取り込めるかも。  
 
  
+
+## 開発環境
+ Microsoft Visual Studio Community 2015
 
 ## Licence
 * MIT  
