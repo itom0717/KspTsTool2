@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration( "" )]
 [assembly: AssemblyCompany( "" )]
 [assembly: AssemblyProduct( "Kerbal Space Program Translation Support Tool V2 for KSP" )]
-[assembly: AssemblyCopyright( "Copyright © 2016 itom0717" )]
+[assembly: AssemblyCopyright( "© 2016 itom0717" )]
 [assembly: AssemblyTrademark( "" )]
 [assembly: AssemblyCulture( "" )]
 
